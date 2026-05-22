@@ -1,7 +1,7 @@
 import { createRootRoute, createRoute, createRouter } from '@tanstack/react-router'
 
 import { AppPage, HomePage, RootLayout } from './pages'
-import { CatalogPage } from './components/CatalogPage'
+import { CatalogPage } from './components/catalog/CatalogPage'
 
 const rootRoute = createRootRoute({
   component: RootLayout,

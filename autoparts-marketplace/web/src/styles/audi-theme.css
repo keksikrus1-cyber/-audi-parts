@@ -493,3 +493,135 @@
   .ap-comparison-header > *:nth-child(n+3),
   .ap-comparison-row > *:nth-child(n+3) { display: none; }
 }
+
+/* ── Catalog page ────────────────────────────────────────── */
+.ap-catalog-page { padding: 2rem; }
+
+.ap-catalog-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 2rem;
+}
+
+.ap-filters-sidebar {
+  background: var(--ap-bg-surface);
+  border-radius: var(--ap-radius);
+  padding: 1.5rem;
+  border: 1px solid var(--ap-border);
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+.ap-filter-group {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--ap-border);
+}
+.ap-filter-group:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.ap-filter-group h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+
+.ap-toggle-group { display: flex; gap: 0.5rem; }
+.ap-toggle-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--ap-bg-primary);
+  border: 1px solid var(--ap-border);
+  cursor: pointer;
+  transition: all var(--ap-transition);
+  color: var(--ap-text-primary);
+}
+.ap-toggle-btn:hover { border-color: var(--ap-accent); }
+.ap-toggle-btn.active { background: var(--ap-accent); color: var(--ap-bg-primary); border-color: var(--ap-accent); }
+
+.ap-checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.ap-checkbox-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer; }
+
+.ap-radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.ap-radio-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer; }
+
+.ap-price-range { display: flex; gap: 0.5rem; align-items: center; }
+
+.ap-catalog-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Products grid */
+.ap-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Product card */
+.ap-product-card {
+  background: var(--ap-bg-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius);
+  overflow: hidden;
+  transition: all var(--ap-transition);
+}
+.ap-product-card:hover {
+  border-color: var(--ap-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--ap-shadow);
+}
+.ap-product-image {
+  aspect-ratio: 16/10;
+  background: var(--ap-bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.ap-product-badge {
+  position: absolute;
+  top: 0.75rem; left: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.ap-badge-original { background: var(--ap-accent); color: var(--ap-bg-primary); }
+.ap-badge-analog   { background: var(--ap-info);   color: #fff; }
+
+.ap-product-actions {
+  position: absolute;
+  top: 0.75rem; right: 0.75rem;
+  display: flex; gap: 0.5rem;
+}
+.ap-action-btn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: var(--ap-bg-surface);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  transition: all var(--ap-transition);
+}
+.ap-action-btn:hover { background: var(--ap-accent); color: var(--ap-bg-primary); }
+
+.ap-product-info { padding: 1rem; }
+.ap-product-brand { font-size: 0.75rem; color: var(--ap-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.ap-product-name  { font-weight: 600; font-size: 0.9rem; margin: 0.25rem 0; line-height: 1.3; }
+.ap-product-footer { display: flex; justify-content: space-between; align-items: flex-end; }
+
+/* Catalog responsive */
+@media (max-width: 900px) {
+  .ap-catalog-layout { grid-template-columns: 1fr; }
+  .ap-filters-sidebar { position: static; }
+}
+@media (max-width: 600px) {
+  .ap-catalog-page { padding: 1rem; }
+  .ap-products-grid { grid-template-columns: 1fr; }
+}
