@@ -940,3 +940,41 @@
 .ap-compare-product-col { text-align: center; }
   font-size: 0.9rem;
 }
+
+/* ── VIN result ──────────────────────────────────────────── */
+.ap-vin-result {
+  background: var(--ap-bg-primary);
+  border-radius: var(--ap-radius);
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: 1px solid var(--ap-border);
+}
+.ap-vin-result-error {
+  border-color: var(--ap-danger);
+  color: var(--ap-danger);
+  font-size: 0.9rem;
+}
+.ap-vin-number {
+  font-size: 1.25rem;
+  color: var(--ap-accent);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+.ap-vin-result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.ap-vin-result-item {}
+.ap-vin-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.ap-vin-tag {
+  background: var(--ap-surface-active);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+  .ap-vin-result-grid { grid-template-columns: 1fr 1fr; }
+}
