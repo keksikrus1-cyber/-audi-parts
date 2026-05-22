@@ -1,25 +1,4 @@
-const ROWS = [
-  {
-    code: 'EX', name: 'Exist.ru',    rating: 4.2, stars: 4,
-    price: '3 200 ₽', delivery: 'бесплатно, 1 день', location: 'Москва',
-    total: '3 200 ₽', savings: 'Лучшая цена', savingsColor: 'var(--ap-success)', best: true,
-  },
-  {
-    code: 'EM', name: 'Emex.ru',     rating: 4.8, stars: 5,
-    price: '3 450 ₽', delivery: '+350 ₽, 2 дня',    location: 'Москва',
-    total: '3 800 ₽', savings: '−600 ₽',       savingsColor: 'var(--ap-success)', best: false,
-  },
-  {
-    code: 'AU', name: 'Autodoc',     rating: 3.4, stars: 3,
-    price: '3 720 ₽', delivery: 'бесплатно, 3 дня', location: 'СПб',
-    total: '3 720 ₽', savings: '−520 ₽',       savingsColor: 'var(--ap-success)', best: false,
-  },
-  {
-    code: 'AV', name: 'Avtoall.ru',  rating: 3.1, stars: 3,
-    price: '4 100 ₽', delivery: '+350 ₽, 4 дня',    location: 'Под заказ',
-    total: '4 450 ₽', savings: '+1 250 ₽',     savingsColor: 'var(--ap-danger)',  best: false,
-  },
-]
+import { PRICE_COMPARISON, PRICE_COMPARISON_TITLE } from '@/data/priceComparison'
 
 function Stars({ filled, rating }: { filled: number; rating: number }) {
   return (
@@ -35,9 +14,7 @@ function Stars({ filled, rating }: { filled: number; rating: number }) {
 export function PriceComparisonTable() {
   return (
     <section style={{ marginBottom: '3rem' }}>
-      <h2 className="ap-heading-lg" style={{ marginBottom: '1.5rem' }}>
-        Сравнение цен: Тормозные колодки Brembo P85075
-      </h2>
+      <h2 className="ap-heading-lg" style={{ marginBottom: '1.5rem' }}>{PRICE_COMPARISON_TITLE}</h2>
       <div className="ap-comparison-table">
         <div className="ap-comparison-header">
           <span>Магазин</span>
@@ -46,25 +23,27 @@ export function PriceComparisonTable() {
           <span>Наличие</span>
           <span style={{ textAlign: 'right' }}>Итого / Экономия</span>
         </div>
-        {ROWS.map(r => (
-          <div key={r.code} className={`ap-comparison-row${r.best ? ' best' : ''}`}>
+        {PRICE_COMPARISON.map(r => (
+          <div key={r.supplierId} className={`ap-comparison-row${r.bestPrice ? ' best' : ''}`}>
             <div className="ap-supplier-cell">
-              <div className="ap-supplier-logo">{r.code}</div>
+              <div className="ap-supplier-logo">{r.shortCode}</div>
               <div>
-                <strong>{r.name}</strong>
+                <strong>{r.supplierName}</strong>
                 <Stars filled={r.stars} rating={r.rating} />
               </div>
             </div>
             <div className="ap-mono" style={{ fontWeight: 500 }}>{r.price}</div>
             <div className="ap-text-secondary" style={{ fontSize: '0.9rem' }}>{r.delivery}</div>
             <div>
-              <span className="ap-badge ap-badge-accent" style={{ background: 'var(--ap-surface-active)', color: 'var(--ap-text-primary)' }}>
+              <span style={{ background: 'var(--ap-surface-active)', color: 'var(--ap-text-primary)', padding: '0.2rem 0.5rem', borderRadius: '6px', fontSize: '0.8rem' }}>
                 {r.location}
               </span>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div className="ap-mono" style={{ fontWeight: 600 }}>{r.total}</div>
-              <div style={{ fontSize: '0.75rem', color: r.savingsColor, marginTop: '0.25rem' }}>{r.savings}</div>
+              <div style={{ fontSize: '0.75rem', color: r.savingsPositive ? 'var(--ap-success)' : 'var(--ap-danger)', marginTop: '0.25rem' }}>
+                {r.savings}
+              </div>
             </div>
           </div>
         ))}
