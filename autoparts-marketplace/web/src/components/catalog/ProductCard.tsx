@@ -1,10 +1,26 @@
 import type { Product } from '@/data/products'
+import { useCart } from '@/components/cart/CartProvider'
 
 interface ProductCardProps {
   product: Product
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { add, setOpen } = useCart()
+
+  const handleAddToCart = () => {
+    add({
+      id: product.id,
+      name: product.name,
+      sku: product.sku,
+      price: product.price,
+      priceFormatted: product.priceFormatted,
+      delivery: product.delivery,
+      supplier: 'Exist.ru',
+    })
+    setOpen(true)
+  }
+
   return (
     <div className="ap-product-card">
       <div className="ap-product-image">
@@ -39,7 +55,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <button
           className="ap-btn ap-btn-primary"
           style={{ width: '100%', marginTop: '0.75rem', padding: '0.6rem', fontSize: '0.85rem' }}
-          onClick={() => console.log('addToCart', product.id)}
+          onClick={handleAddToCart}
         >
           В корзину
         </button>

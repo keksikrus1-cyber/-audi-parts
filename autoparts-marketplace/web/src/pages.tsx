@@ -1,6 +1,8 @@
 import { Link, Outlet } from '@tanstack/react-router'
 
 import { Header } from '@/components/layout/Header'
+import { CartProvider } from '@/components/cart/CartProvider'
+import { CartDrawer } from '@/components/cart/CartDrawer'
 import { HomeHero } from '@/components/home/HomeHero'
 import { SearchForm } from '@/components/home/SearchForm'
 import { PopularCategories } from '@/components/home/PopularCategories'
@@ -21,10 +23,13 @@ import { useAuth } from '@/lib/use-auth'
 
 export function RootLayout() {
   return (
-    <main className="min-h-svh bg-background text-foreground">
-      <Header />
-      <Outlet />
-    </main>
+    <CartProvider>
+      <main className="min-h-svh bg-background text-foreground">
+        <Header />
+        <Outlet />
+        <CartDrawer />
+      </main>
+    </CartProvider>
   )
 }
 
