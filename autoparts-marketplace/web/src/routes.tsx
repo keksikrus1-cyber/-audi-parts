@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter } from '@tanstack/react-rout
 
 import { AppPage, HomePage, RootLayout } from './pages'
 import { CatalogPage } from './components/catalog/CatalogPage'
+import { ModelsPage } from './components/models/ModelsPage'
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -28,7 +29,7 @@ const catalogRoute = createRoute({
 const modelsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/models',
-  component: () => null,
+  component: ModelsPage,
 })
 
 const salvageRoute = createRoute({
