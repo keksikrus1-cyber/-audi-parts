@@ -1,6 +1,6 @@
 import { createRootRoute, createRoute, createRouter } from '@tanstack/react-router'
 
-import { AppPage, HomePage, RootLayout } from './pages'
+import { AppPage, ComingSoonPage, HomePage, RootLayout } from './pages'
 import { CatalogPage } from './components/catalog/CatalogPage'
 import { ModelsPage } from './components/models/ModelsPage'
 
@@ -35,13 +35,13 @@ const modelsRoute = createRoute({
 const salvageRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/salvage',
-  component: () => null,
+  component: () => <ComingSoonPage title="Разборки — скоро" />,
 })
 
 const stoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/sto',
-  component: () => null,
+  component: () => <ComingSoonPage title="Для СТО — скоро" />,
 })
 
 const routeTree = rootRoute.addChildren([

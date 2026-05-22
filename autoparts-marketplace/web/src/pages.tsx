@@ -52,6 +52,16 @@ export function HomePage() {
   )
 }
 
+export function ComingSoonPage({ title }: { title: string }) {
+  return (
+    <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
+      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚧</div>
+      <h2 className="ap-heading-lg" style={{ marginBottom: '0.75rem' }}>{title}</h2>
+      <p className="ap-text-muted">Раздел находится в разработке. Скоро будет доступен.</p>
+    </div>
+  )
+}
+
 export function AppPage() {
   const auth = useAuth()
 
