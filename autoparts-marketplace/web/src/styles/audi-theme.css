@@ -81,3 +81,102 @@
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
 }
+
+/* ── Layout helpers ──────────────────────────────────────── */
+.ap-page {
+  background: var(--ap-bg-primary);
+  color: var(--ap-text-primary);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
+
+.ap-surface {
+  background: var(--ap-bg-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius);
+}
+
+.ap-card {
+  background: var(--ap-bg-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius);
+  box-shadow: var(--ap-shadow);
+  transition: border-color var(--ap-transition), transform var(--ap-transition), box-shadow var(--ap-transition);
+}
+.ap-card:hover {
+  border-color: var(--ap-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--ap-shadow);
+}
+
+.ap-link {
+  color: var(--ap-accent);
+  text-decoration: none;
+  transition: color var(--ap-transition);
+}
+.ap-link:hover { color: var(--ap-accent-hover); }
+
+/* ── Typography ──────────────────────────────────────────── */
+.ap-heading    { font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+.ap-heading-xl { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 2.5rem; line-height: 1.2; }
+.ap-heading-lg { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.75rem; }
+.ap-heading-md { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.25rem; }
+
+.ap-text-secondary { color: var(--ap-text-secondary); }
+.ap-text-muted     { color: var(--ap-text-muted); }
+
+/* ── Forms ───────────────────────────────────────────────── */
+.ap-input,
+.ap-select {
+  font-family: 'IBM Plex Sans', inherit;
+  background: var(--ap-bg-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--ap-text-primary);
+  font-size: 0.95rem;
+  transition: border-color var(--ap-transition), box-shadow var(--ap-transition);
+  width: 100%;
+}
+.ap-input:focus,
+.ap-select:focus {
+  outline: none;
+  border-color: var(--ap-accent);
+  box-shadow: 0 0 0 3px rgba(208,168,74,0.15);
+}
+
+/* ── Icon button ─────────────────────────────────────────── */
+.ap-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--ap-bg-surface);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  position: relative;
+  transition: all var(--ap-transition);
+  color: var(--ap-text-primary);
+}
+.ap-icon-btn:hover {
+  background: var(--ap-surface-hover);
+  transform: translateY(-2px);
+}
+
+/* ── Badge ───────────────────────────────────────────────── */
+.ap-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.ap-badge-accent  { background: var(--ap-accent);  color: var(--ap-bg-primary); }
+.ap-badge-success { background: var(--ap-success);  color: #fff; }
+.ap-badge-danger  { background: var(--ap-danger);   color: #fff; }
+.ap-badge-info    { background: var(--ap-info);     color: #fff; }
