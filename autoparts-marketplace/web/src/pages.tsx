@@ -1,7 +1,10 @@
 import { Link, Outlet } from '@tanstack/react-router'
 
-import { AuthForm } from '@/components/AuthForm'
 import { Header } from '@/components/layout/Header'
+import { HomeHero } from '@/components/home/HomeHero'
+import { SearchForm } from '@/components/home/SearchForm'
+import { PopularCategories } from '@/components/home/PopularCategories'
+import { PriceComparisonTable } from '@/components/home/PriceComparisonTable'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,52 +29,14 @@ export function RootLayout() {
 }
 
 export function HomePage() {
-  const auth = useAuth()
-
-  if (auth.isBootstrapping) {
-    return <LoadingState />
-  }
-
-  if (auth.user) {
-    return (
-      <section className="mx-auto grid w-full max-w-6xl gap-6 px-5 py-16">
-        <Badge variant="outline" className="w-fit">
-          Authenticated starter
-        </Badge>
-        <div className="grid max-w-3xl gap-4">
-          <Typography variant="h1">Session is active</Typography>
-          <Typography className="max-w-2xl" tone="muted">
-            Logged in as{' '}
-            <Typography as="strong" variant="emphasis" tone="default">
-              {auth.user.email}
-            </Typography>
-            .
-            This is the baseline auth pattern for future web features.
-          </Typography>
-        </div>
-        <Button asChild size="lg" className="w-fit">
-          <Link to="/app">Open app</Link>
-        </Button>
-      </section>
-    )
-  }
-
   return (
-    <section className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center">
-      <div className="grid gap-5">
-        <Badge variant="outline" className="w-fit">
-          Golden path template
-        </Badge>
-        <Typography className="max-w-3xl" variant="h1">
-          Auth, validation, API state, and forms are wired from day one.
-        </Typography>
-        <Typography className="max-w-2xl" tone="muted">
-          The web app uses shared Zod contracts, TanStack Query for server state, TanStack Form for
-          input state, and an API client that refreshes sessions through the backend.
-        </Typography>
-      </div>
-      <AuthForm />
-    </section>
+    <div className="ap-home">
+      <HomeHero>
+        <SearchForm />
+      </HomeHero>
+      <PopularCategories />
+      <PriceComparisonTable />
+    </div>
   )
 }
 
