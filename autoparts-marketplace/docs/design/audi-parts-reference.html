@@ -1,0 +1,4441 @@
+<!DOCTYPE html>
+<!-- saved from url=(0128)file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html -->
+<html lang="ru" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudiParts — Агрегатор запчастей Audi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="./AudiParts — Агрегатор запчастей Audi_files/css2" rel="stylesheet">
+
+  <style>
+    /* ================================================
+       CSS ПЕРЕМЕННЫЕ И ТЕМЫ
+       ================================================ */
+    :root {
+      /* Тёмная тема (по умолчанию) */
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #111118;
+      --bg-surface: #16161f;
+      --surface-hover: #1e1e2d;
+      --surface-active: #252538;
+      --accent: #d0a84a;
+      --accent-hover: #e8c86a;
+      --text-primary: #f0ece8;
+      --text-secondary: #a09898;
+      --text-muted: #6b6570;
+      --success: #4caf7d;
+      --danger: #e05050;
+      --info: #5b9bd5;
+      --border: rgba(255,255,255,0.08);
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --radius: 12px;
+      --transition: 0.2s ease;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f5f5f7;
+      --bg-secondary: #ffffff;
+      --bg-surface: #ffffff;
+      --surface-hover: #f0f0f2;
+      --surface-active: #e8e8ec;
+      --text-primary: #1a1a1f;
+      --text-secondary: #6b6570;
+      --text-muted: #a09898;
+      --border: rgba(0,0,0,0.1);
+      --shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+
+    /* ================================================
+       БАЗОВЫЕ СТИЛИ
+       ================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+      transition: background var(--transition), color var(--transition);
+    }
+
+    h1, h2, h3 { font-family: 'Rajdhani', sans-serif; font-weight: 700; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+
+    .mono { font-family: 'IBM Plex Mono', monospace; }
+
+    a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--accent-hover); }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, select {
+      font-family: inherit;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(208,168,74,0.15);
+    }
+
+    /* ================================================
+       ШАПКА
+       ================================================ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-rings {
+      display: flex;
+      position: relative;
+      width: 44px;
+      height: 44px;
+    }
+
+    .ring {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      margin-left: -5px;
+    }
+
+    .ring:first-child { margin-left: 0; }
+
+    .logo-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    .nav-desktop {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active { color: var(--text-primary); }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      position: relative;
+      transition: all var(--transition);
+    }
+
+    .icon-btn:hover {
+      background: var(--surface-hover);
+      transform: translateY(-2px);
+    }
+
+    .icon-btn .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--accent);
+      color: var(--bg-primary);
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.15rem 0.4rem;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(208,168,74,0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+    }
+
+    .btn-small {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* Переключатель темы */
+    .theme-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.35rem;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .theme-toggle button {
+      width: 32px;
+      height: 32px;
+      border-radius: 18px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .theme-toggle button.active {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    /* Мобильное меню */
+    .hamburger {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--bg-surface);
+      font-size: 1.2rem;
+    }
+
+    /* ================================================
+       ТАБЫ СТРАНИЦ
+       ================================================ */
+    .page-tabs {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    .page-tabs-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .page-tab {
+      padding: 1rem 1.5rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border-bottom: 2px solid transparent;
+      transition: all var(--transition);
+    }
+
+    .page-tab:hover { color: var(--text-primary); }
+    .page-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .page { display: none; padding: 2rem; }
+    .page.active { display: block; }
+
+    /* ================================================
+       ГЛАВНАЯ СТРАНИЦА
+       ================================================ */
+    .hero {
+      max-width: 1400px;
+      margin: 0 auto 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-content h1 span { color: var(--accent); }
+
+    .hero-description {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .stat-card .value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-card .label {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Поисковая форма */
+    .search-form {
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .search-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-tab {
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-primary);
+      transition: all var(--transition);
+    }
+
+    .search-tab:hover { color: var(--text-primary); }
+    .search-tab.active {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .search-tab-content { display: none; }
+    .search-tab-content.active { display: block; }
+
+    .search-input-group {
+      margin-bottom: 1rem;
+    }
+
+    .search-input-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .search-input-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .search-input-row input { flex: 1; }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    /* VIN результат */
+    .vin-result {
+      background: var(--bg-primary);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    .vin-result.show { display: block; }
+    .vin-result.error { border-color: var(--danger); }
+
+    .vin-result .vin-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .vin-result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .vin-result-item .label { font-size: 0.75rem; color: var(--text-muted); }
+    .vin-result-item .value { font-weight: 500; }
+
+    .vin-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .vin-tag {
+      background: var(--surface-active);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    /* Категории */
+    .categories-section { margin-bottom: 3rem; }
+    .categories-section h2 { margin-bottom: 1.5rem; }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 1rem;
+    }
+
+    .category-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .category-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .category-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .category-card .name { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .category-card .count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Таблица сравнения */
+    .comparison-section h2 { margin-bottom: 1.5rem; }
+
+    .comparison-table {
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .comparison-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      background: var(--surface-active);
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+      transition: background var(--transition);
+    }
+
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row:hover { background: var(--surface-hover); }
+    .comparison-row.best-price { background: rgba(208,168,74,0.08); }
+    .comparison-row.best-price .price-cell { color: var(--accent); font-weight: 600; }
+
+    .supplier-cell { display: flex; align-items: center; gap: 0.75rem; }
+    .supplier-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--surface-active);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .price-cell {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 500;
+    }
+
+    .delivery-cell { color: var(--text-secondary); font-size: 0.9rem; }
+
+    .savings-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--success);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .total-cell { text-align: right; }
+    .total-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+    }
+    .savings-text {
+      font-size: 0.75rem;
+      color: var(--success);
+      margin-top: 0.25rem;
+    }
+
+    /* ================================================
+       КАТАЛОГ
+       ================================================ */
+    .catalog-layout {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 2rem;
+    }
+
+    /* Боковые фильтры */
+    .filters-sidebar {
+      background: var(--bg-surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
+
+    .filter-group {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .filter-group h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Toggle-кнопки */
+    .toggle-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+
+    .toggle-btn:hover { border-color: var(--accent); }
+    .toggle-btn.active {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border-color: var(--accent);
+    }
+
+    /* Чекбоксы */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
+    .checkbox-count {
+      margin-left: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Цена */
+    .price-range {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .price-range input { width: 80px; text-align: center; }
+    .price-range span { color: var(--text-muted); }
+
+    /* Радио */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .radio-label input { accent-color: var(--accent); }
+
+    /* Товары */
+    .catalog-content {}
+
+    .catalog-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .results-count {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .results-count strong { color: var(--accent); }
+
+    .sort-select {
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      min-width: 150px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* Карточка товара */
+    .product-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+
+    .product-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      aspect-ratio: 16/10;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .badge-original {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .badge-analog {
+      background: var(--info);
+      color: white;
+    }
+
+    .product-actions {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+    }
+
+    .action-btn:hover {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .action-btn.active {
+      background: var(--danger);
+      color: white;
+    }
+
+    .product-info {
+      padding: 1rem;
+    }
+
+    .product-brand {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 0.25rem 0;
+      line-height: 1.3;
+    }
+
+    .product-sku {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-compat {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .product-price-block {}
+
+    .product-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .product-delivery {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .product-offers {
+      text-align: right;
+    }
+
+    .product-offers-count {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .product-offers-count strong { color: var(--accent); }
+
+    .product-add-btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 8px;
+      background: var(--accent);
+      color: var(--bg-primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all var(--transition);
+    }
+
+    .product-add-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Спарклайн */
+    .sparkline {
+      width: 60px;
+      height: 20px;
+      margin-top: 0.5rem;
+    }
+
+    .sparkline-line {
+      fill: none;
+      stroke: var(--info);
+      stroke-width: 1.5;
+    }
+
+    .sparkline-dot {
+      fill: var(--info);
+    }
+
+    /* Звёздный рейтинг */
+    .rating {
+      display: flex;
+      gap: 2px;
+      margin-top: 0.25rem;
+    }
+
+    .star {
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .star.empty { opacity: 0.3; }
+
+    /* ================================================
+       СТРАНИЦА МОДЕЛЕЙ
+       ================================================ */
+    .models-header {
+      max-width: 1400px;
+      margin: 0 auto 2rem;
+    }
+
+    .models-search {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .models-search input {
+      flex: 1;
+      min-width: 250px;
+      max-width: 400px;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+    }
+
+    .filter-chip:hover { border-color: var(--accent); }
+    .filter-chip.active {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border-color: var(--accent);
+    }
+
+    /* Выбранная модель */
+    .selected-model {
+      background: linear-gradient(135deg, var(--success), #3d9d6d);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .selected-model.show { display: flex; }
+
+    .selected-model-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .selected-model-info p {
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+
+    /* Аккордеон моделей */
+    .models-list {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .model-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .model-header {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .model-header:hover { background: var(--surface-hover); }
+
+    .model-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--surface-active);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .model-title {
+      flex: 1;
+    }
+
+    .model-title h3 { margin-bottom: 0.25rem; }
+    .model-title span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .model-stats {
+      text-align: center;
+      padding: 0 1.5rem;
+      border-left: 1px solid var(--border);
+    }
+
+    .model-stats .count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .model-stats .label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .model-arrow {
+      font-size: 1.25rem;
+      transition: transform var(--transition);
+    }
+
+    .model-item.open .model-arrow { transform: rotate(180deg); }
+
+    .model-generations {
+      display: none;
+      padding: 0 1.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .model-item.open .model-generations { display: block; }
+
+    .generations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .generation-card {
+      background: var(--bg-primary);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .generation-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .generation-card.selected {
+      border-color: var(--success);
+      background: rgba(76,175,125,0.1);
+    }
+
+    .gen-code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .gen-info { flex: 1; }
+    .gen-info h4 { margin-bottom: 0.5rem; }
+    .gen-info .years { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .gen-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    .gen-tag {
+      background: var(--surface-active);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+    }
+
+    .gen-parts {
+      text-align: right;
+    }
+
+    .gen-parts .count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .gen-parts .label { font-size: 0.7rem; color: var(--text-muted); }
+
+    .gen-select-btn {
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 6px;
+      background: var(--success);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ================================================
+       КОРЗИНА (SLIDE-IN)
+       ================================================ */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      max-width: 100%;
+      height: 100%;
+      background: var(--bg-secondary);
+      z-index: 201;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-panel.open { transform: translateX(0); }
+
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h3 { display: flex; align-items: center; gap: 0.5rem; }
+
+    .cart-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--bg-surface);
+      font-size: 1.25rem;
+    }
+
+    .cart-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .cart-supplier {
+      margin-bottom: 1.5rem;
+    }
+
+    .cart-supplier-header {
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item:last-child { border-bottom: none; }
+
+    .cart-item-info { flex: 1; }
+    .cart-item-info h4 { font-size: 0.85rem; margin-bottom: 0.25rem; }
+    .cart-item-info p { font-size: 0.75rem; color: var(--text-muted); }
+
+    .cart-item-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--bg-surface);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover { background: var(--surface-hover); }
+
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .cart-totals {
+      margin-bottom: 1rem;
+    }
+
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .cart-total-row.grand {
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-top: 2px solid var(--border);
+      padding-top: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 10px;
+      background: var(--accent);
+      color: var(--bg-primary);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .checkout-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .cart-empty .icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
+
+    /* ================================================
+       МОДАЛЬНЫЕ ОКНА
+       ================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+
+    .modal {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.open .modal { transform: scale(1); }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body { padding: 1.5rem; }
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    /* Форма */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+      width: 100%;
+    }
+
+    /* Сравнение товаров */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .compare-table th {
+      background: var(--surface-active);
+      font-weight: 600;
+    }
+
+    .compare-table td:first-child {
+      font-weight: 500;
+      background: var(--bg-primary);
+    }
+
+    .compare-table .product-col {
+      text-align: center;
+    }
+
+    .compare-table .product-name {
+      font-weight: 600;
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    /* ================================================
+       ПАНЕЛЬ СРАВНЕНИЯ
+       ================================================ */
+    .compare-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border-top: 2px solid var(--accent);
+      padding: 1rem 2rem;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 150;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+    }
+
+    .compare-bar.show { display: flex; }
+
+    .compare-bar-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .compare-bar-info strong { color: var(--accent); }
+
+    .compare-bar-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* ================================================
+       TOAST
+       ================================================ */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 400;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: toastIn 0.3s ease, toastOut 0.3s ease 2.3s forwards;
+      pointer-events: auto;
+    }
+
+    .toast.success { border-left: 3px solid var(--success); }
+    .toast.error { border-left: 3px solid var(--danger); }
+    .toast.info { border-left: 3px solid var(--info); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+
+    /* ================================================
+       FOOTER
+       ================================================ */
+    .footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .footer-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-col h4 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding: 0.35rem 0;
+    }
+
+    .footer-col a:hover { color: var(--text-primary); }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* ================================================
+       LIVE SEARCH
+       ================================================ */
+    .live-search-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .live-search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 0 0 10px 10px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      z-index: 50;
+      box-shadow: var(--shadow);
+    }
+
+    .live-search-results.show { display: block; }
+
+    .search-result-item {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--surface-hover); }
+
+    .search-result-item .name { font-weight: 500; font-size: 0.9rem; }
+    .search-result-item .meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .search-result-item .meta .sku {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--accent);
+    }
+
+    /* ================================================
+       RESPONSIVE
+       ================================================ */
+    @media (max-width: 1200px) {
+      .categories-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .nav-desktop { display: none; }
+      .hamburger { display: flex; align-items: center; justify-content: center; }
+      .catalog-layout { grid-template-columns: 1fr; }
+      .filters-sidebar { position: static; }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 0.75rem 1rem; }
+      .page { padding: 1rem; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .search-row { grid-template-columns: 1fr; }
+      .comparison-header, .comparison-row {
+        grid-template-columns: 1fr 1fr;
+        font-size: 0.8rem;
+      }
+      .comparison-header > *:nth-child(n+3),
+      .comparison-row > *:nth-child(n+3) { display: none; }
+      .products-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .models-search { flex-direction: column; align-items: stretch; }
+      .filter-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; }
+      .vin-result-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Мобильное меню */
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100%;
+      background: var(--bg-secondary);
+      z-index: 250;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      padding: 1rem;
+    }
+
+    .mobile-nav.open { transform: translateX(0); }
+
+    .mobile-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .mobile-nav a {
+      display: block;
+      padding: 0.75rem 0;
+      color: var(--text-primary);
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-nav a.active { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <!-- ================================================
+       ШАПКА
+       ================================================ -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="logo" onclick="showPage(&#39;home&#39;); return false;">
+        <div class="logo-rings">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+        </div>
+        <div class="logo-text">Audi<span>Parts</span></div>
+      </a>
+
+      <nav class="nav-desktop">
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="nav-link active" data-page="home" onclick="showPage(&#39;home&#39;)">Главная</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="nav-link" data-page="catalog" onclick="showPage(&#39;catalog&#39;)">Каталог</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="nav-link" data-page="models" onclick="showPage(&#39;models&#39;)">Модели</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="nav-link" data-page="salvage" onclick="showPage(&#39;salvage&#39;)">Разборки</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="nav-link">Для СТО</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="theme-toggle">
+          <button class="dark-togg active" onclick="setTheme(&#39;dark&#39;)" title="Тёмная">🌙</button>
+          <button class="light-togg" onclick="setTheme(&#39;light&#39;)" title="Светлая">☀️</button>
+        </div>
+
+        <button class="icon-btn" title="Уведомления">🔔<span class="badge">3</span></button>
+        <button class="icon-btn" onclick="toggleFavorites()" title="Избранное">♡</button>
+        <button class="icon-btn" onclick="toggleCart()" title="Корзина">🛒<span class="badge" id="cart-badge">0</span></button>
+        <button class="btn btn-primary btn-small">Войти</button>
+
+        <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильное меню -->
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-header">
+      <span class="logo-text">Audi<span>Parts</span></span>
+      <button onclick="toggleMobileNav()">✕</button>
+    </div>
+    <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" class="active" onclick="showPage(&#39;home&#39;); toggleMobileNav();">Главная</a>
+    <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" onclick="showPage(&#39;catalog&#39;); toggleMobileNav();">Каталог</a>
+    <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" onclick="showPage(&#39;models&#39;); toggleMobileNav();">Модели</a>
+    <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#" onclick="showPage(&#39;salvage&#39;); toggleMobileNav();">Разборки</a>
+    <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Для СТО</a>
+  </div>
+
+  <!-- ================================================
+       ТАБЫ СТРАНИЦ
+       ================================================ -->
+  <div class="page-tabs">
+    <div class="page-tabs-inner">
+      <button class="page-tab active" data-page="home" onclick="showPage(&#39;home&#39;)">Главная</button>
+      <button class="page-tab" data-page="catalog" onclick="showPage(&#39;catalog&#39;)">Каталог</button>
+      <button class="page-tab" data-page="models" onclick="showPage(&#39;models&#39;)">Модели</button>
+      <button class="page-tab" data-page="salvage" onclick="showPage(&#39;salvage&#39;)">Разборки</button>
+    </div>
+  </div>
+
+  <!-- ================================================
+       СТРАНИЦА 1: ГЛАВНАЯ
+       ================================================ -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Найдите лучшую цену на <span>любую запчасть</span> Audi</h1>
+        <p class="hero-description">
+          Агрегатор запчастей для всех моделей Audi. Сравниваем цены от Exist.ru, Emex.ru, Autodoc и Avtoall в одном месте.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-card"><div class="value">2.4M+</div><div class="label">Артикулов</div></div>
+          <div class="stat-card"><div class="value">24</div><div class="label">Поставщика</div></div>
+          <div class="stat-card"><div class="value">от 1 дня</div><div class="label">Доставка</div></div>
+          <div class="stat-card"><div class="value">47</div><div class="label">Поколений Audi</div></div>
+        </div>
+      </div>
+
+      <div class="search-form">
+        <div class="search-tabs">
+          <button class="search-tab active" onclick="switchSearchTab(&#39;query&#39;)">По запросу</button>
+          <button class="search-tab" onclick="switchSearchTab(&#39;vin&#39;)">По VIN</button>
+          <button class="search-tab" onclick="switchSearchTab(&#39;article&#39;)">Артикул</button>
+        </div>
+
+        <!-- Поиск по запросу -->
+        <div class="search-tab-content active" id="tab-query">
+          <div class="live-search-container">
+            <div class="search-input-group">
+              <label>Название запчасти</label>
+              <div class="search-input-row">
+                <input type="text" id="search-query" placeholder="Например: тормозные колодки, масло, фильтр...">
+                <button class="btn btn-primary" onclick="performSearch()">НАЙТИ</button>
+              </div>
+              <div class="live-search-results" id="live-search-results"></div>
+            </div>
+          </div>
+          <div class="search-row">
+            <div>
+              <label>Модель Audi</label>
+              <select id="home-model">
+                <option value="">Выберите модель</option>
+                <option value="A1">Audi A1</option>
+                <option value="A3">Audi A3</option>
+                <option value="A4">Audi A4</option>
+                <option value="A5">Audi A5</option>
+                <option value="A6">Audi A6</option>
+                <option value="A7">Audi A7</option>
+                <option value="A8">Audi A8</option>
+                <option value="Q3">Audi Q3</option>
+                <option value="Q5">Audi Q5</option>
+                <option value="Q7">Audi Q7</option>
+                <option value="Q8">Audi Q8</option>
+                <option value="TT">Audi TT</option>
+                <option value="RS6">Audi RS6</option>
+                <option value="e-tron">Audi e-tron</option>
+              </select>
+            </div>
+            <div>
+              <label>Год выпуска</label>
+              <select id="home-year">
+                <option value="">Год</option>
+              <option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option><option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option><option value="1990">1990</option></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Поиск по VIN -->
+        <div class="search-tab-content" id="tab-vin">
+          <div class="search-input-group">
+            <label>VIN номер (17 символов)</label>
+            <div class="search-input-row">
+              <input type="text" id="vin-input" placeholder="WAUZZZ8K9BA123456" maxlength="17" class="mono">
+              <button class="btn btn-primary" onclick="decodeVin()">ДЕКОДИРОВАТЬ</button>
+            </div>
+          </div>
+          <div class="vin-result" id="vin-result"></div>
+        </div>
+
+        <!-- Поиск по артикулу -->
+        <div class="search-tab-content" id="tab-article">
+          <div class="search-input-group">
+            <label>Артикул запчасти</label>
+            <div class="search-input-row">
+              <input type="text" id="article-input" placeholder="Например: 8K0698151, P85075, W712/35">
+              <button class="btn btn-primary" onclick="searchByArticle()">НАЙТИ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Категории -->
+    <section class="categories-section">
+      <h2>Популярные категории</h2>
+      <div class="categories-grid">
+        <div class="category-card" onclick="goToCatalog(&#39;тормоза&#39;)">
+          <div class="icon">🛑</div>
+          <div class="name">Тормоза</div>
+          <div class="count">1,240</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;подвеска&#39;)">
+          <div class="icon">🔩</div>
+          <div class="name">Подвеска</div>
+          <div class="count">2,180</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;фильтры&#39;)">
+          <div class="icon">🔧</div>
+          <div class="name">Фильтры</div>
+          <div class="count">890</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;масла&#39;)">
+          <div class="icon">🫙</div>
+          <div class="name">Масла</div>
+          <div class="count">340</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;электроника&#39;)">
+          <div class="icon">⚡</div>
+          <div class="name">Электроника</div>
+          <div class="count">1,670</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;кузов&#39;)">
+          <div class="icon">🚗</div>
+          <div class="name">Кузов</div>
+          <div class="count">3,420</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;двигатель&#39;)">
+          <div class="icon">⚙️</div>
+          <div class="name">Двигатель</div>
+          <div class="count">2,890</div>
+        </div>
+        <div class="category-card" onclick="goToCatalog(&#39;кпп&#39;)">
+          <div class="icon">🔄</div>
+          <div class="name">КПП</div>
+          <div class="count">760</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Таблица сравнения -->
+    <section class="comparison-section">
+      <h2>Сравнение цен: Тормозные колодки Brembo P85075</h2>
+      <div class="comparison-table">
+        <div class="comparison-header">
+          <span>Магазин</span>
+          <span>Цена</span>
+          <span>Доставка</span>
+          <span>Наличие</span>
+          <span style="text-align:right;">Итого / Экономия</span>
+        </div>
+        <div class="comparison-row best-price" data-price="3200" data-delivery="0">
+          <div class="supplier-cell">
+            <div class="supplier-logo">EX</div>
+            <div>
+              <strong>Exist.ru</strong>
+              <div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span> 4.2</div>
+            </div>
+          </div>
+          <div class="price-cell">3 200 ₽</div>
+          <div class="delivery-cell">бесплатно, 1 день</div>
+          <div><span class="vin-tag">Москва</span></div>
+          <div class="total-cell">
+            <div class="total-price">3 200 ₽</div>
+            <div class="savings-text">Лучшая цена</div>
+          </div>
+        </div>
+        <div class="comparison-row" data-price="3450" data-delivery="350">
+          <div class="supplier-cell">
+            <div class="supplier-logo">EM</div>
+            <div>
+              <strong>Emex.ru</strong>
+              <div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span> 4.8</div>
+            </div>
+          </div>
+          <div class="price-cell">3 450 ₽</div>
+          <div class="delivery-cell">+350 ₽, 2 дня</div>
+          <div><span class="vin-tag">Москва</span></div>
+          <div class="total-cell">
+            <div class="total-price">3 800 ₽</div>
+            <div class="savings-text">−600 ₽</div>
+          </div>
+        </div>
+        <div class="comparison-row" data-price="3720" data-delivery="0">
+          <div class="supplier-cell">
+            <div class="supplier-logo">AU</div>
+            <div>
+              <strong>Autodoc</strong>
+              <div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span> 3.4</div>
+            </div>
+          </div>
+          <div class="price-cell">3 720 ₽</div>
+          <div class="delivery-cell">бесплатно, 3 дня</div>
+          <div><span class="vin-tag">СПб</span></div>
+          <div class="total-cell">
+            <div class="total-price">3 720 ₽</div>
+            <div class="savings-text">−520 ₽</div>
+          </div>
+        </div>
+        <div class="comparison-row" data-price="4100" data-delivery="350">
+          <div class="supplier-cell">
+            <div class="supplier-logo">AV</div>
+            <div>
+              <strong>Avtoall.ru</strong>
+              <div class="rating"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span> 3.1</div>
+            </div>
+          </div>
+          <div class="price-cell">4 100 ₽</div>
+          <div class="delivery-cell">+350 ₽, 4 дня</div>
+          <div><span class="vin-tag">Под заказ</span></div>
+          <div class="total-cell">
+            <div class="total-price">4 450 ₽</div>
+            <div class="savings-text" style="color: var(--danger);">+1 250 ₽</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================================================
+       СТРАНИЦА 2: КАТАЛОГ
+       ================================================ -->
+  <div class="page" id="page-catalog">
+    <div class="catalog-layout">
+      <!-- Боковые фильтры -->
+      <aside class="filters-sidebar">
+        <div class="filter-group">
+          <h4>Тип</h4>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-type="all" onclick="filterType(&#39;all&#39;, this)">Все</button>
+            <button class="toggle-btn" data-type="original" onclick="filterType(&#39;original&#39;, this)">Оригинал</button>
+            <button class="toggle-btn" data-type="analog" onclick="filterType(&#39;analog&#39;, this)">Аналог</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Цена</h4>
+          <div class="price-range">
+            <input type="number" placeholder="От" id="filter-min-price">
+            <span>—</span>
+            <input type="number" placeholder="До" id="filter-max-price">
+            <span>₽</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Бренды</h4>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" value="Brembo" checked=""> Brembo <span class="checkbox-count">42</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="MANN-FILTER" checked=""> MANN-FILTER <span class="checkbox-count">89</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Bilstein"> Bilstein <span class="checkbox-count">31</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="NGK"> NGK <span class="checkbox-count">56</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Lemförder"> Lemförder <span class="checkbox-count">28</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Audi VAG" checked=""> Audi VAG <span class="checkbox-count">194</span></label>
+            <label class="checkbox-label"><input type="checkbox" value="Bosch"> Bosch <span class="checkbox-count">77</span></label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Срок доставки</h4>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="delivery" value="any" checked=""> Любой</label>
+            <label class="radio-label"><input type="radio" name="delivery" value="1-2"> 1-2 дня</label>
+            <label class="radio-label"><input type="radio" name="delivery" value="5"> до 5 дней</label>
+            <label class="radio-label"><input type="radio" name="delivery" value="10"> до 10 дней</label>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Поставщики</h4>
+          <div class="checkbox-group">
+            <label class="checkbox-label"><input type="checkbox" value="Exist" checked=""> Exist.ru</label>
+            <label class="checkbox-label"><input type="checkbox" value="Emex" checked=""> Emex.ru</label>
+            <label class="checkbox-label"><input type="checkbox" value="Autodoc" checked=""> Autodoc</label>
+            <label class="checkbox-label"><input type="checkbox" value="Avtoall" checked=""> Avtoall.ru</label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;" onclick="applyFilters()">Применить</button>
+      </aside>
+
+      <!-- Товары -->
+      <div class="catalog-content">
+        <div class="catalog-toolbar">
+          <div class="results-count">Найдено: <strong id="products-count">6</strong> товаров</div>
+          <select class="sort-select" id="sort-select" onchange="sortProducts()">
+            <option value="price-asc">Дешевле</option>
+            <option value="price-desc">Дороже</option>
+            <option value="delivery">Быстрее доставка</option>
+            <option value="rating">По рейтингу</option>
+            <option value="popular">Популярность</option>
+          </select>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+          <div class="product-card" data-id="1" data-price="3200" data-delivery="1">
+            <div class="product-image">
+              <span>🛑</span>
+              <span class="product-badge badge-analog">
+                Аналог
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(1)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(1)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(1)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">Brembo</div>
+              <div class="product-name">Тормозные колодки P85075</div>
+              <div class="product-sku mono">P85075</div>
+              <div class="product-compat">A4 B8, A5 Q5</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,13.65178100291051 5,17.366961939219472 10,18 15,16.40977726751427 20,12.668937606736113 25,9.046624158709617 30,7.7400836542907285 35,9.541846031392286 40,13.358986409363073 45,16.87607865596597 50,17.959701809197444 55,15.952544605115147"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="15.952544605115147" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">3&nbsp;200 ₽</div>
+                  <div class="product-delivery">1 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>4</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(1)">В корзину</button>
+            </div>
+          </div>
+        
+          <div class="product-card" data-id="2" data-price="7800" data-delivery="2">
+            <div class="product-image">
+              <span>🛑</span>
+              <span class="product-badge badge-original">
+                Оригинал
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(2)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(2)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(2)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">Audi VAG</div>
+              <div class="product-name">Тормозные колодки 8K0698151F</div>
+              <div class="product-sku mono">8K0698151F</div>
+              <div class="product-compat">A4 B8</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,13.825503713618012 5,15.652487602194784 10,14.37272775465799 15,10.762509321817248 20,7.0117423606161235 25,5.395591779323864 30,6.894392833921712 35,10.598992916643827 40,14.262231328207102 45,15.66203680403375 50,13.949306126049146 55,10.162958740909303"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="10.162958740909303" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">7&nbsp;800 ₽</div>
+                  <div class="product-delivery">2 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>2</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(2)">В корзину</button>
+            </div>
+          </div>
+        
+          <div class="product-card" data-id="3" data-price="680" data-delivery="1">
+            <div class="product-image">
+              <span>🔧</span>
+              <span class="product-badge badge-analog">
+                Аналог
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(3)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(3)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(3)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">MANN-FILTER</div>
+              <div class="product-name">Масляный фильтр W712/35</div>
+              <div class="product-sku mono">W712/35</div>
+              <div class="product-compat">A3, A4, A6, Q5, Q7</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,12.116330744480095 5,11.155884352664996 10,7.701254717893172 15,3.8479738199981286 20,2 25,3.185474314837541 30,6.751913807003303 35,10.535964137510936 40,12.242271152889229 45,10.835811914021964 50,7.169725722359429 55,3.467811267674106"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="3.467811267674106" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">680 ₽</div>
+                  <div class="product-delivery">1 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>4</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(3)">В корзину</button>
+            </div>
+          </div>
+        
+          <div class="product-card" data-id="4" data-price="12500" data-delivery="3">
+            <div class="product-image">
+              <span>🔩</span>
+              <span class="product-badge badge-analog">
+                Аналог
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(4)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(4)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(4)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">Bilstein</div>
+              <div class="product-name">Амортизатор 22-153694</div>
+              <div class="product-sku mono">22-153694</div>
+              <div class="product-compat">A6 C7, A7</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,9.365509324781165 5,6.090360036273791 10,2.1612137446592525 15,2 20,2.8639490647528962 25,6.26756316288937 30,10.146255654537054 35,12.147263721251402 40,11.056802720679107 45,7.536331663204459 50,3.7213210521665716 55,2"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="2" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">12&nbsp;500 ₽</div>
+                  <div class="product-delivery">3 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>3</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(4)">В корзину</button>
+            </div>
+          </div>
+        
+          <div class="product-card" data-id="5" data-price="890" data-delivery="1">
+            <div class="product-image">
+              <span>⚡</span>
+              <span class="product-badge badge-analog">
+                Аналог
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(5)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(5)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(5)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">NGK</div>
+              <div class="product-name">Свеча зажигания IZFR6K-13</div>
+              <div class="product-sku mono">IZFR6K-13</div>
+              <div class="product-compat">A4, A5, Q5 2.0 TFSI</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,6.926981354705333 5,2.9491428826872714 10,2 15,2.5364489105826284 20,5.753698880046285 25,9.700209248208226 30,11.98207978275774 35,11.215158437160277 40,7.864649408572166 45,3.9629265142784424 50,2 55,2.9947782349282037"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="2.9947782349282037" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">890 ₽</div>
+                  <div class="product-delivery">1 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>4</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(5)">В корзину</button>
+            </div>
+          </div>
+        
+          <div class="product-card" data-id="6" data-price="4300" data-delivery="2">
+            <div class="product-image">
+              <span>🔩</span>
+              <span class="product-badge badge-analog">
+                Аналог
+              </span>
+              <div class="product-actions">
+                <button class="action-btn " onclick="toggleFavorite(6)" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(6)" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(6)" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">Lemförder</div>
+              <div class="product-name">Рычаг подвески 32801 01</div>
+              <div class="product-sku mono">32801 01</div>
+              <div class="product-compat">A4 B8, A5, Q5</div>
+              <svg class="sparkline" viewBox="0 0 60 20">
+        <polyline class="sparkline-line" points="0,6.000979306565521 5,3.278325812137009 10,3.483564591979807 15,6.492200556277705 20,10.479235501053966 25,13.026187529610517 30,12.588109718195712 35,9.430734188781507 40,5.469282569653458 45,3.1067182554662627 50,3.7761410566774902 55,7.071488084852361"></polyline>
+        <circle class="sparkline-dot" cx="55" cy="7.071488084852361" r="2"></circle>
+      </svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">4&nbsp;300 ₽</div>
+                  <div class="product-delivery">2 дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>3</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(6)">В корзину</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       СТРАНИЦА 3: МОДЕЛИ ПО ПОКОЛЕНИЯМ
+       ================================================ -->
+  <div class="page" id="page-models">
+    <div class="models-header">
+      <div class="models-search">
+        <input type="text" placeholder="Поиск модели..." id="model-search" oninput="filterModels()">
+        <div class="filter-chips">
+          <button class="filter-chip active" data-type="all" onclick="filterModelType(&#39;all&#39;, this)">Все</button>
+          <button class="filter-chip" data-type="sedan" onclick="filterModelType(&#39;sedan&#39;, this)">Седаны</button>
+          <button class="filter-chip" data-type="crossover" onclick="filterModelType(&#39;crossover&#39;, this)">Кроссоверы</button>
+          <button class="filter-chip" data-type="sport" onclick="filterModelType(&#39;sport&#39;, this)">Спорт</button>
+          <button class="filter-chip" data-type="electric" onclick="filterModelType(&#39;electric&#39;, this)">Электро</button>
+        </div>
+      </div>
+
+      <div class="selected-model" id="selected-model">
+        <div class="selected-model-info">
+          <h3 id="selected-model-name">Audi A4 B8 (2007-2016)</h3>
+          <p id="selected-model-desc">Седан • Платформа MLB • 17 400 запчастей</p>
+        </div>
+        <button class="btn btn-primary" onclick="findPartsForModel()">Найти запчасти</button>
+      </div>
+    </div>
+
+    <div class="models-list" id="models-list">
+        <div class="model-item" data-id="A1" data-types="sport">
+          <div class="model-header" onclick="toggleModel(&#39;A1&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A1</h3>
+              <span>2 поколений • 2010–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">18&nbsp;400</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A1" data-gen="8X" onclick="selectGeneration(&#39;A1&#39;, &#39;8X&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8X</div>
+                  <div class="gen-info">
+                    <h4>A1 8X</h4>
+                    <div class="years">2010-2018 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">3-дв хэтчбек</span><span class="gen-tag">5-дв Sportback</span>
+                      <span class="gen-tag">1.2 TFSI</span><span class="gen-tag">1.4 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">9.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A1&#39;, &#39;8X&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A1" data-gen="GB" onclick="selectGeneration(&#39;A1&#39;, &#39;GB&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">GB</div>
+                  <div class="gen-info">
+                    <h4>A1 GB</h4>
+                    <div class="years">2018-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">5-дв Sportback</span>
+                      <span class="gen-tag">1.0 TFSI</span><span class="gen-tag">1.5 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">9.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A1&#39;, &#39;GB&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A3" data-types="sedan,sport">
+          <div class="model-header" onclick="toggleModel(&#39;A3&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A3</h3>
+              <span>4 поколений • 1996–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">42&nbsp;100</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A3" data-gen="8L" onclick="selectGeneration(&#39;A3&#39;, &#39;8L&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8L</div>
+                  <div class="gen-info">
+                    <h4>A3 8L</h4>
+                    <div class="years">1996-2003 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">3-дв</span><span class="gen-tag">5-дв</span>
+                      <span class="gen-tag">1.6</span><span class="gen-tag">1.8</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">8.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A3&#39;, &#39;8L&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A3" data-gen="8P" onclick="selectGeneration(&#39;A3&#39;, &#39;8P&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">8P</div>
+                  <div class="gen-info">
+                    <h4>A3 8P</h4>
+                    <div class="years">2003-2012 • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">3-дв</span><span class="gen-tag">Sportback</span><span class="gen-tag">Cabrio</span>
+                      <span class="gen-tag">2.0 FSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">12.4K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A3&#39;, &#39;8P&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A3" data-gen="8V" onclick="selectGeneration(&#39;A3&#39;, &#39;8V&#39;, &#39;третье&#39;)">
+                  <div class="gen-code">8V</div>
+                  <div class="gen-info">
+                    <h4>A3 8V</h4>
+                    <div class="years">2012-2020 • третье</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">3-дв</span><span class="gen-tag">Sportback</span><span class="gen-tag">Седан</span>
+                      <span class="gen-tag">1.0 TFSI</span><span class="gen-tag">1.4 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">13.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A3&#39;, &#39;8V&#39;, &#39;третье&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A3" data-gen="8Y" onclick="selectGeneration(&#39;A3&#39;, &#39;8Y&#39;, &#39;четвёртое&#39;)">
+                  <div class="gen-code">8Y</div>
+                  <div class="gen-info">
+                    <h4>A3 8Y</h4>
+                    <div class="years">2020-н.в. • четвёртое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Sportback</span><span class="gen-tag">Седан</span>
+                      <span class="gen-tag">1.0 TFSI</span><span class="gen-tag">1.5 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">7.3K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A3&#39;, &#39;8Y&#39;, &#39;четвёртое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A4" data-types="sedan">
+          <div class="model-header" onclick="toggleModel(&#39;A4&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A4</h3>
+              <span>5 поколений • 1994–2023</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">68&nbsp;500</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A4" data-gen="B5" onclick="selectGeneration(&#39;A4&#39;, &#39;B5&#39;, &#39;пятое&#39;)">
+                  <div class="gen-code">B5</div>
+                  <div class="gen-info">
+                    <h4>A4 B5</h4>
+                    <div class="years">1994-2001 • пятое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span>
+                      <span class="gen-tag">1.6</span><span class="gen-tag">1.8T</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">9.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A4&#39;, &#39;B5&#39;, &#39;пятое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A4" data-gen="B6" onclick="selectGeneration(&#39;A4&#39;, &#39;B6&#39;, &#39;шестое&#39;)">
+                  <div class="gen-code">B6</div>
+                  <div class="gen-info">
+                    <h4>A4 B6</h4>
+                    <div class="years">2000-2006 • шестое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Cabrio</span>
+                      <span class="gen-tag">1.8T</span><span class="gen-tag">2.4</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">12.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A4&#39;, &#39;B6&#39;, &#39;шестое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A4" data-gen="B7" onclick="selectGeneration(&#39;A4&#39;, &#39;B7&#39;, &#39;седьмое&#39;)">
+                  <div class="gen-code">B7</div>
+                  <div class="gen-info">
+                    <h4>A4 B7</h4>
+                    <div class="years">2004-2008 • седьмое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Cabrio</span>
+                      <span class="gen-tag">1.8T</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">13.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A4&#39;, &#39;B7&#39;, &#39;седьмое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A4" data-gen="B8" onclick="selectGeneration(&#39;A4&#39;, &#39;B8&#39;, &#39;восьмое&#39;)">
+                  <div class="gen-code">B8</div>
+                  <div class="gen-info">
+                    <h4>A4 B8</h4>
+                    <div class="years">2007-2016 • восьмое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">1.8 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">17.4K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A4&#39;, &#39;B8&#39;, &#39;восьмое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A4" data-gen="B9" onclick="selectGeneration(&#39;A4&#39;, &#39;B9&#39;, &#39;девятое&#39;)">
+                  <div class="gen-code">B9</div>
+                  <div class="gen-info">
+                    <h4>A4 B9</h4>
+                    <div class="years">2015-2023 • девятое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">1.4 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">15.5K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A4&#39;, &#39;B9&#39;, &#39;девятое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A5" data-types="sport">
+          <div class="model-header" onclick="toggleModel(&#39;A5&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A5</h3>
+              <span>2 поколений • 2007–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">38&nbsp;700</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A5" data-gen="8T" onclick="selectGeneration(&#39;A5&#39;, &#39;8T&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8T</div>
+                  <div class="gen-info">
+                    <h4>A5 8T</h4>
+                    <div class="years">2007-2016 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Купе</span><span class="gen-tag">Кабриолет</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">1.8 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">19.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A5&#39;, &#39;8T&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A5" data-gen="F5" onclick="selectGeneration(&#39;A5&#39;, &#39;F5&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">F5</div>
+                  <div class="gen-info">
+                    <h4>A5 F5</h4>
+                    <div class="years">2016-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Купе</span><span class="gen-tag">Кабриолет</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">19.5K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A5&#39;, &#39;F5&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A6" data-types="sedan">
+          <div class="model-header" onclick="toggleModel(&#39;A6&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A6</h3>
+              <span>5 поколений • 1994–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">72&nbsp;300</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A6" data-gen="C4" onclick="selectGeneration(&#39;A6&#39;, &#39;C4&#39;, &#39;четвёртое&#39;)">
+                  <div class="gen-code">C4</div>
+                  <div class="gen-info">
+                    <h4>A6 C4</h4>
+                    <div class="years">1994-1997 • четвёртое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span>
+                      <span class="gen-tag">1.8</span><span class="gen-tag">2.0</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">7.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A6&#39;, &#39;C4&#39;, &#39;четвёртое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A6" data-gen="C5" onclick="selectGeneration(&#39;A6&#39;, &#39;C5&#39;, &#39;пятое&#39;)">
+                  <div class="gen-code">C5</div>
+                  <div class="gen-info">
+                    <h4>A6 C5</h4>
+                    <div class="years">1997-2005 • пятое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">1.8T</span><span class="gen-tag">2.4</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">14.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A6&#39;, &#39;C5&#39;, &#39;пятое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A6" data-gen="C6" onclick="selectGeneration(&#39;A6&#39;, &#39;C6&#39;, &#39;шестое&#39;)">
+                  <div class="gen-code">C6</div>
+                  <div class="gen-info">
+                    <h4>A6 C6</h4>
+                    <div class="years">2004-2011 • шестое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">2.4</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">16.5K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A6&#39;, &#39;C6&#39;, &#39;шестое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A6" data-gen="C7" onclick="selectGeneration(&#39;A6&#39;, &#39;C7&#39;, &#39;седьмое&#39;)">
+                  <div class="gen-code">C7</div>
+                  <div class="gen-info">
+                    <h4>A6 C7</h4>
+                    <div class="years">2011-2018 • седьмое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">1.8 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">18.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A6&#39;, &#39;C7&#39;, &#39;седьмое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A6" data-gen="C8" onclick="selectGeneration(&#39;A6&#39;, &#39;C8&#39;, &#39;восьмое&#39;)">
+                  <div class="gen-code">C8</div>
+                  <div class="gen-info">
+                    <h4>A6 C8</h4>
+                    <div class="years">2018-н.в. • восьмое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">15.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A6&#39;, &#39;C8&#39;, &#39;восьмое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A7" data-types="sport">
+          <div class="model-header" onclick="toggleModel(&#39;A7&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A7</h3>
+              <span>2 поколений • 2010–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">31&nbsp;200</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A7" data-gen="4G" onclick="selectGeneration(&#39;A7&#39;, &#39;4G&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">4G</div>
+                  <div class="gen-info">
+                    <h4>A7 4G</h4>
+                    <div class="years">2010-2018 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Sportback</span><span class="gen-tag">Allroad</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">15.4K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A7&#39;, &#39;4G&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A7" data-gen="4K" onclick="selectGeneration(&#39;A7&#39;, &#39;4K&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">4K</div>
+                  <div class="gen-info">
+                    <h4>A7 4K</h4>
+                    <div class="years">2018-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">15.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A7&#39;, &#39;4K&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="A8" data-types="sedan">
+          <div class="model-header" onclick="toggleModel(&#39;A8&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi A8</h3>
+              <span>4 поколений • 1994–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">28&nbsp;900</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="A8" data-gen="D2" onclick="selectGeneration(&#39;A8&#39;, &#39;D2&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">D2</div>
+                  <div class="gen-info">
+                    <h4>A8 D2</h4>
+                    <div class="years">1994-2002 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Long</span>
+                      <span class="gen-tag">2.5 TDI</span><span class="gen-tag">2.8</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">5.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A8&#39;, &#39;D2&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A8" data-gen="D3" onclick="selectGeneration(&#39;A8&#39;, &#39;D3&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">D3</div>
+                  <div class="gen-info">
+                    <h4>A8 D3</h4>
+                    <div class="years">2002-2010 • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Long</span>
+                      <span class="gen-tag">3.0 TDI</span><span class="gen-tag">4.0 TDI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">7.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A8&#39;, &#39;D3&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A8" data-gen="D4" onclick="selectGeneration(&#39;A8&#39;, &#39;D4&#39;, &#39;третье&#39;)">
+                  <div class="gen-code">D4</div>
+                  <div class="gen-info">
+                    <h4>A8 D4</h4>
+                    <div class="years">2009-2018 • третье</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Long</span>
+                      <span class="gen-tag">3.0 TFSI</span><span class="gen-tag">4.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">8.4K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A8&#39;, &#39;D4&#39;, &#39;третье&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="A8" data-gen="D5" onclick="selectGeneration(&#39;A8&#39;, &#39;D5&#39;, &#39;четвёртое&#39;)">
+                  <div class="gen-code">D5</div>
+                  <div class="gen-info">
+                    <h4>A8 D5</h4>
+                    <div class="years">2017-н.в. • четвёртое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Sedan</span><span class="gen-tag">Long</span>
+                      <span class="gen-tag">3.0 TFSI</span><span class="gen-tag">4.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">7.7K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;A8&#39;, &#39;D5&#39;, &#39;четвёртое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="Q3" data-types="crossover">
+          <div class="model-header" onclick="toggleModel(&#39;Q3&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi Q3</h3>
+              <span>2 поколений • 2011–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">29&nbsp;400</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="Q3" data-gen="8U" onclick="selectGeneration(&#39;Q3&#39;, &#39;8U&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8U</div>
+                  <div class="gen-info">
+                    <h4>Q3 8U</h4>
+                    <div class="years">2011-2018 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">5-дв кроссовер</span>
+                      <span class="gen-tag">1.4 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">13.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q3&#39;, &#39;8U&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="Q3" data-gen="F3" onclick="selectGeneration(&#39;Q3&#39;, &#39;F3&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">F3</div>
+                  <div class="gen-info">
+                    <h4>Q3 F3</h4>
+                    <div class="years">2018-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">кроссовер</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">1.5 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">15.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q3&#39;, &#39;F3&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="Q5" data-types="crossover">
+          <div class="model-header" onclick="toggleModel(&#39;Q5&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi Q5</h3>
+              <span>2 поколений • 2008–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">53&nbsp;200</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="Q5" data-gen="8R" onclick="selectGeneration(&#39;Q5&#39;, &#39;8R&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8R</div>
+                  <div class="gen-info">
+                    <h4>Q5 8R</h4>
+                    <div class="years">2008-2017 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">5-дв кроссовер</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">24.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q5&#39;, &#39;8R&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="Q5" data-gen="FY" onclick="selectGeneration(&#39;Q5&#39;, &#39;FY&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">FY</div>
+                  <div class="gen-info">
+                    <h4>Q5 FY</h4>
+                    <div class="years">2017-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">кроссовер</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">28.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q5&#39;, &#39;FY&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="Q7" data-types="crossover">
+          <div class="model-header" onclick="toggleModel(&#39;Q7&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi Q7</h3>
+              <span>2 поколений • 2005–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">41&nbsp;800</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="Q7" data-gen="4L" onclick="selectGeneration(&#39;Q7&#39;, &#39;4L&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">4L</div>
+                  <div class="gen-info">
+                    <h4>Q7 4L</h4>
+                    <div class="years">2005-2015 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">7-местный кроссовер</span>
+                      <span class="gen-tag">3.6 FSI</span><span class="gen-tag">4.2 FSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">19.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q7&#39;, &#39;4L&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="Q7" data-gen="4M" onclick="selectGeneration(&#39;Q7&#39;, &#39;4M&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">4M</div>
+                  <div class="gen-info">
+                    <h4>Q7 4M</h4>
+                    <div class="years">2015-н.в. • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">7-местный кроссовер</span>
+                      <span class="gen-tag">2.0 TFSI</span><span class="gen-tag">3.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">22.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q7&#39;, &#39;4M&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="Q8" data-types="crossover">
+          <div class="model-header" onclick="toggleModel(&#39;Q8&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi Q8</h3>
+              <span>1 поколений • 2018–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">22&nbsp;100</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="Q8" data-gen="4MN" onclick="selectGeneration(&#39;Q8&#39;, &#39;4MN&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">4MN</div>
+                  <div class="gen-info">
+                    <h4>Q8 4MN</h4>
+                    <div class="years">2018-н.в. • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">5-дв купе-кроссовер</span>
+                      <span class="gen-tag">55 TFSI</span><span class="gen-tag">60 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">22.1K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;Q8&#39;, &#39;4MN&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="TT" data-types="sport">
+          <div class="model-header" onclick="toggleModel(&#39;TT&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi TT</h3>
+              <span>3 поколений • 1998–2023</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">24&nbsp;600</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="TT" data-gen="8N" onclick="selectGeneration(&#39;TT&#39;, &#39;8N&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">8N</div>
+                  <div class="gen-info">
+                    <h4>TT 8N</h4>
+                    <div class="years">1998-2006 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Купе</span><span class="gen-tag">Родстер</span>
+                      <span class="gen-tag">1.8T 150</span><span class="gen-tag">1.8T 180</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">7.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;TT&#39;, &#39;8N&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="TT" data-gen="8J" onclick="selectGeneration(&#39;TT&#39;, &#39;8J&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">8J</div>
+                  <div class="gen-info">
+                    <h4>TT 8J</h4>
+                    <div class="years">2006-2014 • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Купе</span><span class="gen-tag">Родстер</span>
+                      <span class="gen-tag">1.8 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">8.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;TT&#39;, &#39;8J&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="TT" data-gen="8S" onclick="selectGeneration(&#39;TT&#39;, &#39;8S&#39;, &#39;третье&#39;)">
+                  <div class="gen-code">8S</div>
+                  <div class="gen-info">
+                    <h4>TT 8S</h4>
+                    <div class="years">2014-2023 • третье</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Купе</span><span class="gen-tag">Родстер</span>
+                      <span class="gen-tag">1.8 TFSI</span><span class="gen-tag">2.0 TFSI</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">8.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;TT&#39;, &#39;8S&#39;, &#39;третье&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="RS6" data-types="sport">
+          <div class="model-header" onclick="toggleModel(&#39;RS6&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi RS6</h3>
+              <span>4 поколений • 2002–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">18&nbsp;700</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="RS6" data-gen="C5" onclick="selectGeneration(&#39;RS6&#39;, &#39;C5&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">C5</div>
+                  <div class="gen-info">
+                    <h4>RS6 C5</h4>
+                    <div class="years">2002-2004 • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span>
+                      <span class="gen-tag">4.2 V8 biturbo 450 л.с.</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">3.8K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;RS6&#39;, &#39;C5&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="RS6" data-gen="C6" onclick="selectGeneration(&#39;RS6&#39;, &#39;C6&#39;, &#39;второе&#39;)">
+                  <div class="gen-code">C6</div>
+                  <div class="gen-info">
+                    <h4>RS6 C6</h4>
+                    <div class="years">2008-2010 • второе</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Седан</span><span class="gen-tag">Avant</span>
+                      <span class="gen-tag">5.0 V10 biturbo 580 л.с.</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">4.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;RS6&#39;, &#39;C6&#39;, &#39;второе&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="RS6" data-gen="C7" onclick="selectGeneration(&#39;RS6&#39;, &#39;C7&#39;, &#39;третье&#39;)">
+                  <div class="gen-code">C7</div>
+                  <div class="gen-info">
+                    <h4>RS6 C7</h4>
+                    <div class="years">2012-2018 • третье</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Avant</span>
+                      <span class="gen-tag">4.0 TFSI 560 л.с.</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">5.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;RS6&#39;, &#39;C7&#39;, &#39;третье&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="RS6" data-gen="C8" onclick="selectGeneration(&#39;RS6&#39;, &#39;C8&#39;, &#39;четвёртое&#39;)">
+                  <div class="gen-code">C8</div>
+                  <div class="gen-info">
+                    <h4>RS6 C8</h4>
+                    <div class="years">2019-н.в. • четвёртое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">Avant</span><span class="gen-tag">Performance</span>
+                      <span class="gen-tag">4.0 TFSI 600 л.с. MHEV</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">5.5K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;RS6&#39;, &#39;C8&#39;, &#39;четвёртое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="model-item" data-id="e-tron" data-types="electric,crossover">
+          <div class="model-header" onclick="toggleModel(&#39;e-tron&#39;)">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi e-tron</h3>
+              <span>2 поколений • 2018–н.в.</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">16&nbsp;800</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              
+                <div class="generation-card" data-model="e-tron" data-gen="GE" onclick="selectGeneration(&#39;e-tron&#39;, &#39;GE&#39;, &#39;первое&#39;)">
+                  <div class="gen-code">GE</div>
+                  <div class="gen-info">
+                    <h4>e-tron GE</h4>
+                    <div class="years">2018-н.в. • первое</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">кроссовер</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">55 quattro 408 л.с.</span><span class="gen-tag">50 quattro 313 л.с.</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">10.2K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;e-tron&#39;, &#39;GE&#39;, &#39;первое&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+                <div class="generation-card" data-model="e-tron" data-gen="Q4" onclick="selectGeneration(&#39;e-tron&#39;, &#39;Q4&#39;, &#39;Q4 e-tron&#39;)">
+                  <div class="gen-code">Q4</div>
+                  <div class="gen-info">
+                    <h4>e-tron Q4</h4>
+                    <div class="years">2021-н.в. • Q4 e-tron</div>
+                    <div class="gen-tags">
+                      <span class="gen-tag">кроссовер</span><span class="gen-tag">Sportback</span>
+                      <span class="gen-tag">35 RWD</span><span class="gen-tag">40 RWD</span>
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">6.6K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration(&#39;e-tron&#39;, &#39;Q4&#39;, &#39;Q4 e-tron&#39;)">Выбрать</button>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- ================================================
+       FOOTER
+       ================================================ -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>О проекте</h4>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">О нас</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Как это работает</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Контакты</a>
+      </div>
+      <div class="footer-col">
+        <h4>Каталог</h4>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Тормоза</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Подвеска</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Фильтры</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Все категории</a>
+      </div>
+      <div class="footer-col">
+        <h4>Модели Audi</h4>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">A4</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">A6</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Q5</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Все модели</a>
+      </div>
+      <div class="footer-col">
+        <h4>Поставщики</h4>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Exist.ru</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Emex.ru</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Autodoc</a>
+        <a href="file:///C:/Users/Keksi/OneDrive/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/audi-parts-aggregator.html#">Avtoall</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 AudiParts — Агрегатор запчастей для Audi в России
+    </div>
+  </footer>
+
+  <!-- ================================================
+       КОРЗИНА
+       ================================================ -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3>🛒 Корзина</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty">
+        <div class="icon">🛒</div>
+        <p>Корзина пуста</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-totals" id="cart-totals">
+        <div class="cart-total-row"><span>Товары:</span><span id="cart-subtotal">0 ₽</span></div>
+        <div class="cart-total-row"><span>Доставка:</span><span id="cart-delivery">0 ₽</span></div>
+        <div class="cart-total-row grand"><span>Итого:</span><span id="cart-total">0 ₽</span></div>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">Оформить заказ</button>
+    </div>
+  </div>
+
+  <!-- ================================================
+       ПАНЕЛЬ СРАВНЕНИЯ
+       ================================================ -->
+  <div class="compare-bar" id="compare-bar">
+    <div class="compare-bar-info">
+      Сравниваете <strong id="compare-count">0</strong> товара
+    </div>
+    <div class="compare-bar-actions">
+      <button class="btn btn-secondary btn-small" onclick="clearCompare()">Очистить</button>
+      <button class="btn btn-primary btn-small" onclick="openCompareModal()">Сравнить</button>
+    </div>
+  </div>
+
+  <!-- ================================================
+       МОДАЛЬНЫЕ ОКНА
+       ================================================ -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Заголовок</h3>
+        <button onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- ================================================
+       TOAST
+       ================================================ -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    /* ================================================
+       ДАННЫЕ (MOCK)
+       ================================================ */
+
+    // Каталог товаров
+    const PRODUCTS = [
+      {
+        id: 1, name: 'Тормозные колодки P85075', brand: 'Brembo', sku: 'P85075',
+        type: 'analog', price: 3200, delivery: 1, offers: 4,
+        compat: 'A4 B8, A5 Q5', image: '🛑',
+        description: 'Тормозные колодки передние'
+      },
+      {
+        id: 2, name: 'Тормозные колодки 8K0698151F', brand: 'Audi VAG', sku: '8K0698151F',
+        type: 'original', price: 7800, delivery: 2, offers: 2,
+        compat: 'A4 B8', image: '🛑',
+        description: 'Тормозные колодки оригинал передние'
+      },
+      {
+        id: 3, name: 'Масляный фильтр W712/35', brand: 'MANN-FILTER', sku: 'W712/35',
+        type: 'analog', price: 680, delivery: 1, offers: 4,
+        compat: 'A3, A4, A6, Q5, Q7', image: '🔧',
+        description: 'Масляный фильтр'
+      },
+      {
+        id: 4, name: 'Амортизатор 22-153694', brand: 'Bilstein', sku: '22-153694',
+        type: 'analog', price: 12500, delivery: 3, offers: 3,
+        compat: 'A6 C7, A7', image: '🔩',
+        description: 'Амортизатор передний'
+      },
+      {
+        id: 5, name: 'Свеча зажигания IZFR6K-13', brand: 'NGK', sku: 'IZFR6K-13',
+        type: 'analog', price: 890, delivery: 1, offers: 4,
+        compat: 'A4, A5, Q5 2.0 TFSI', image: '⚡',
+        description: 'Свеча зажигания Iridium'
+      },
+      {
+        id: 6, name: 'Рычаг подвески 32801 01', brand: 'Lemförder', sku: '32801 01',
+        type: 'analog', price: 4300, delivery: 2, offers: 3,
+        compat: 'A4 B8, A5, Q5', image: '🔩',
+        description: 'Рычаг передней подвески'
+      }
+    ];
+
+    // Модели Audi с поколениями
+    const AUDI_MODELS = [
+      {
+        id: 'A1', name: 'A1', type: 'hatchback', types: ['sport'],
+        generations: [
+          { code: '8X', name: 'первое', years: '2010-2018', engine: '1.2 TFSI, 1.4 TFSI, 1.8 TFSI, 1.6 TDI, 2.0 TDI', body: '3-дв хэтчбек, 5-дв Sportback', platform: 'PQ25', parts: 9200 },
+          { code: 'GB', name: 'второе', years: '2018-н.в.', engine: '1.0 TFSI, 1.5 TFSI, 2.0 TFSI S', body: '5-дв Sportback', platform: 'MQB A0', parts: 9200 }
+        ]
+      },
+      {
+        id: 'A3', name: 'A3', type: 'compact', types: ['sedan', 'sport'],
+        generations: [
+          { code: '8L', name: 'первое', years: '1996-2003', engine: '1.6, 1.8, 1.8T, 1.9 TDI', body: '3-дв, 5-дв', platform: 'PQ34', parts: 8600 },
+          { code: '8P', name: 'второе', years: '2003-2012', engine: '2.0 FSI, 2.0 TFSI, 3.2 VR6, 1.9 TDI, 2.0 TDI', body: '3-дв, Sportback, Cabrio', platform: 'PQ35', parts: 12400 },
+          { code: '8V', name: 'третье', years: '2012-2020', engine: '1.0 TFSI, 1.4 TFSI, 1.8 TFSI, 2.0 TFSI, 1.6 TDI, 2.0 TDI', body: '3-дв, Sportback, Седан', platform: 'MQB', parts: 13800 },
+          { code: '8Y', name: 'четвёртое', years: '2020-н.в.', engine: '1.0 TFSI, 1.5 TFSI, 2.0 TFSI, 2.0 TDI', body: 'Sportback, Седан', platform: 'MQB Evo', parts: 7300 }
+        ]
+      },
+      {
+        id: 'A4', name: 'A4', type: 'sedan', types: ['sedan'],
+        generations: [
+          { code: 'B5', name: 'пятое', years: '1994-2001', engine: '1.6, 1.8T, 2.8, 1.9 TDI, 2.5 TDI', body: 'Седан, Avant', platform: 'PL45', parts: 9800 },
+          { code: 'B6', name: 'шестое', years: '2000-2006', engine: '1.8T, 2.4, 3.0, 1.9 TDI', body: 'Седан, Avant, Cabrio', platform: 'PL46', parts: 12600 },
+          { code: 'B7', name: 'седьмое', years: '2004-2008', engine: '1.8T, 2.0 TFSI, 3.2 FSI, 4.2 RS4, 2.0 TDI, 3.0 TDI', body: 'Седан, Avant, Cabrio', platform: 'рестайлинг B6', parts: 13200 },
+          { code: 'B8', name: 'восьмое', years: '2007-2016', engine: '1.8 TFSI, 2.0 TFSI, 3.0 TFSI, 2.0 TDI, 2.7 TDI, 3.0 TDI', body: 'Седан, Avant, Allroad', platform: 'MLB', parts: 17400 },
+          { code: 'B9', name: 'девятое', years: '2015-2023', engine: '1.4 TFSI, 2.0 TFSI, 2.9 TFSI RS4, 2.0 TDI, 3.0 TDI', body: 'Седан, Avant, Allroad', platform: 'MLB Evo', parts: 15500 }
+        ]
+      },
+      {
+        id: 'A5', name: 'A5', type: 'coupe', types: ['sport'],
+        generations: [
+          { code: '8T', name: 'первое', years: '2007-2016', engine: '1.8 TFSI, 2.0 TFSI, 3.0 TFSI, 3.2 FSI, 4.2 S5', body: 'Купе, Кабриолет, Sportback', platform: 'MLB', parts: 19200 },
+          { code: 'F5', name: 'второе', years: '2016-н.в.', engine: '2.0 TFSI, 3.0 TFSI, 2.9 TFSI RS5, 2.0 TDI, 3.0 TDI', body: 'Купе, Кабриолет, Sportback', platform: 'MLB Evo', parts: 19500 }
+        ]
+      },
+      {
+        id: 'A6', name: 'A6', type: 'sedan', types: ['sedan'],
+        generations: [
+          { code: 'C4', name: 'четвёртое', years: '1994-1997', engine: '1.8, 2.0, 2.6, 2.8, 2.5 TDI', body: 'Седан, Avant', platform: 'PL45', parts: 7200 },
+          { code: 'C5', name: 'пятое', years: '1997-2005', engine: '1.8T, 2.4, 2.7T, 2.8, 3.0, 1.9 TDI, 2.5 TDI', body: 'Седан, Avant, Allroad', platform: 'PL46', parts: 14800 },
+          { code: 'C6', name: 'шестое', years: '2004-2011', engine: '2.0 TFSI, 2.4, 2.8 FSI, 3.0 TFSI, 5.2 V10, 2.0 TDI, 3.0 TDI', body: 'Седан, Avant, Allroad', platform: 'PL46 Evo', parts: 16500 },
+          { code: 'C7', name: 'седьмое', years: '2011-2018', engine: '1.8 TFSI, 2.0 TFSI, 3.0 TFSI, 4.0 TFSI RS6, 2.0 TDI, 3.0 TDI', body: 'Седан, Avant, Allroad', platform: 'MLB', parts: 18200 },
+          { code: 'C8', name: 'восьмое', years: '2018-н.в.', engine: '2.0 TFSI, 3.0 TFSI, 2.9 TFSI RS6, 2.0 TDI, 3.0 TDI, 55 TFSI e', body: 'Седан, Avant, Allroad', platform: 'MLB Evo', parts: 15600 }
+        ]
+      },
+      {
+        id: 'A7', name: 'A7', type: 'hatchback', types: ['sport'],
+        generations: [
+          { code: '4G', name: 'первое', years: '2010-2018', engine: '2.0 TFSI, 3.0 TFSI, 4.0 TFSI RS7, 3.0 TDI BiTDI', body: 'Sportback, Allroad', platform: 'MLB', parts: 15400 },
+          { code: '4K', name: 'второе', years: '2018-н.в.', engine: '2.0 TFSI, 3.0 TFSI, 2.9 TFSI RS7, 55 TFSI e, 50 TDI', body: 'Sportback', platform: 'MLB Evo', parts: 15800 }
+        ]
+      },
+      {
+        id: 'A8', name: 'A8', type: 'sedan', types: ['sedan'],
+        generations: [
+          { code: 'D2', name: 'первое', years: '1994-2002', engine: '2.5 TDI, 2.8, 3.7, 4.2, 6.0 W12', body: 'Седан, Long', platform: 'ASF', parts: 5600 },
+          { code: 'D3', name: 'второе', years: '2002-2010', engine: '3.0 TDI, 4.0 TDI, 3.2 FSI, 4.2 FSI, 6.0 W12', body: 'Седан, Long', platform: 'ASF II', parts: 7200 },
+          { code: 'D4', name: 'третье', years: '2009-2018', engine: '3.0 TFSI, 4.0 TFSI, 6.3 W12, 3.0 TDI, 4.2 TDI hybrid', body: 'Седан, Long', platform: 'MLB', parts: 8400 },
+          { code: 'D5', name: 'четвёртое', years: '2017-н.в.', engine: '3.0 TFSI, 4.0 TFSI, 6.0 W12, 55 TFSI e, 50 TDI', body: 'Sedan, Long', platform: 'MLB Evo 48V', parts: 7700 }
+        ]
+      },
+      {
+        id: 'Q3', name: 'Q3', type: 'crossover', types: ['crossover'],
+        generations: [
+          { code: '8U', name: 'первое', years: '2011-2018', engine: '1.4 TFSI, 2.0 TFSI, 2.0 TDI', body: '5-дв кроссовер', platform: 'PQ35', parts: 13800 },
+          { code: 'F3', name: 'второе', years: '2018-н.в.', engine: '1.5 TFSI, 2.0 TFSI, RS Q3, 2.5, 1.6 TDI, 2.0 TDI', body: 'кроссовер, Sportback', platform: 'MQB', parts: 15600 }
+        ]
+      },
+      {
+        id: 'Q5', name: 'Q5', type: 'crossover', types: ['crossover'],
+        generations: [
+          { code: '8R', name: 'первое', years: '2008-2017', engine: '2.0 TFSI, 3.0 TFSI, SQ5, 3.0 TFSI, 2.0 TDI, 3.0 TDI, hybrid', body: '5-дв кроссовер', platform: 'MLB', parts: 24600 },
+          { code: 'FY', name: 'второе', years: '2017-н.в.', engine: '2.0 TFSI, 3.0 TFSI, SQ5, 3.0, 2.0 TDI, 3.0 TDI, 55 TFSI e', body: 'кроссовер, Sportback', platform: 'MLB Evo', parts: 28600 }
+        ]
+      },
+      {
+        id: 'Q7', name: 'Q7', type: 'crossover', types: ['crossover'],
+        generations: [
+          { code: '4L', name: 'первое', years: '2005-2015', engine: '3.6 FSI, 4.2 FSI, 6.0 W12, 3.0 TDI, 4.2 TDI', body: '7-местный кроссовер', platform: 'PL71', parts: 19200 },
+          { code: '4M', name: 'второе', years: '2015-н.в.', engine: '2.0 TFSI, 3.0 TFSI, SQ7, 4.0 TDI, 2.0 TDI, 3.0 TDI, 60 TFSI e', body: '7-местный кроссовер', platform: 'MLB Evo', parts: 22600 }
+        ]
+      },
+      {
+        id: 'Q8', name: 'Q8', type: 'crossover', types: ['crossover'],
+        generations: [
+          { code: '4MN', name: 'первое', years: '2018-н.в.', engine: '55 TFSI, 60 TFSI, SQ8 4.0, 50 TDI, RSQ8 4.0', body: '5-дв купе-кроссовер', platform: 'MLB Evo', parts: 22100 }
+        ]
+      },
+      {
+        id: 'TT', name: 'TT', type: 'coupe', types: ['sport'],
+        generations: [
+          { code: '8N', name: 'первое', years: '1998-2006', engine: '1.8T 150, 1.8T 180, 1.8T 225, 3.2 VR6', body: 'Купе, Родстер', platform: 'PQ34', parts: 7200 },
+          { code: '8J', name: 'второе', years: '2006-2014', engine: '1.8 TFSI, 2.0 TFSI, 3.2 VR6, TTS, TTRS 2.5', body: 'Купе, Родстер', platform: 'PQ35', parts: 8800 },
+          { code: '8S', name: 'третье', years: '2014-2023', engine: '1.8 TFSI, 2.0 TFSI, TTS, 2.0 TTRS 2.5', body: 'Купе, Родстер', platform: 'MQB', parts: 8600 }
+        ]
+      },
+      {
+        id: 'RS6', name: 'RS6', type: 'sedan', types: ['sport'],
+        generations: [
+          { code: 'C5', name: 'первое', years: '2002-2004', engine: '4.2 V8 biturbo 450 л.с.', body: 'Седан, Avant', platform: 'первый RS6', parts: 3800 },
+          { code: 'C6', name: 'второе', years: '2008-2010', engine: '5.0 V10 biturbo 580 л.с.', body: 'Седан, Avant', platform: 'V10', parts: 4200 },
+          { code: 'C7', name: 'третье', years: '2012-2018', engine: '4.0 TFSI 560 л.с.', body: 'Avant', platform: '4.0 V8 biturbo', parts: 5200 },
+          { code: 'C8', name: 'четвёртое', years: '2019-н.в.', engine: '4.0 TFSI 600 л.с. MHEV', body: 'Avant, Performance', platform: 'MLB Evo 48V', parts: 5500 }
+        ]
+      },
+      {
+        id: 'e-tron', name: 'e-tron', type: 'electric', types: ['electric', 'crossover'],
+        generations: [
+          { code: 'GE', name: 'первое', years: '2018-н.в.', engine: '55 quattro 408 л.с., 50 quattro 313 л.с., S quattro 503 л.с.', body: 'кроссовер, Sportback', platform: 'MLB Evo', parts: 10200, battery: '71-114 кВт·ч' },
+          { code: 'Q4', name: 'Q4 e-tron', years: '2021-н.в.', engine: '35 RWD, 40 RWD, 45 quattro, 50 quattro', body: 'кроссовер, Sportback', platform: 'MEB', parts: 6600 }
+        ]
+      }
+    ];
+
+    // Подсказки для живого поиска
+    const SEARCH_SUGGESTIONS = [
+      { name: 'Тормозные колодки передние', type: 'category', query: 'тормозные колодки' },
+      { name: 'Тормозные колодки Brembo P85075', type: 'product', sku: 'P85075', query: 'P85075' },
+      { name: 'Масляный фильтр', type: 'category', query: 'масляный фильтр' },
+      { name: 'Масляный фильтр MANN W712/35', type: 'product', sku: 'W712/35', query: 'W712/35' },
+      { name: 'Амортизатор Bilstein', type: 'brand', query: 'Bilstein' },
+      { name: 'Audi A4 B8', type: 'model', query: 'A4 B8' },
+      { name: 'Audi Q5 FY', type: 'model', query: 'Q5' },
+      { name: 'Свечи зажигания NGK', type: 'brand', query: 'NGK' },
+      { name: 'Рычаг подвески Lemförder', type: 'brand', query: 'Lemförder' },
+      { name: 'Audi A6 C7', type: 'model', query: 'A6 C7' }
+    ];
+
+    /* ================================================
+       СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+       ================================================ */
+    let cart = JSON.parse(localStorage.getItem('audiCart')) || [];
+    let favorites = JSON.parse(localStorage.getItem('audiFavorites')) || [];
+    let compareList = [];
+    let selectedGeneration = null;
+    let priceAlerts = JSON.parse(localStorage.getItem('audiPriceAlerts')) || [];
+
+    /* ================================================
+       ИНИЦИАЛИЗАЦИЯ
+       ================================================ */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Заполняем год
+      const yearSelect = document.getElementById('home-year');
+      for (let y = 2024; y >= 1990; y--) {
+        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+      }
+
+      // Загружаем тему
+      const theme = localStorage.getItem('audiTheme') || 'dark';
+      setTheme(theme);
+
+      // Рендерим каталог и модели
+      renderProducts(PRODUCTS);
+      renderModels(AUDI_MODELS);
+
+      // Обновляем корзину
+      updateCartBadge();
+
+      // Живой поиск
+      initLiveSearch();
+    });
+
+    /* ================================================
+       ТЕМА
+       ================================================ */
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('audiTheme', theme);
+
+      document.querySelector('.theme-toggle .dark-togg').classList.toggle('active', theme === 'dark');
+      document.querySelector('.theme-toggle .light-togg').classList.toggle('active', theme === 'light');
+    }
+
+    /* ================================================
+       НАВИГАЦИЯ
+       ================================================ */
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelector(`.page-tab[data-page="${page}"]`).classList.add('active');
+      const navLink = document.querySelector(`.nav-link[data-page="${page}"]`);
+      if (navLink) navLink.classList.add('active');
+    }
+
+    function toggleMobileNav() {
+      document.getElementById('mobile-nav').classList.toggle('open');
+      document.getElementById('cart-overlay').classList.toggle('open');
+    }
+
+    /* ================================================
+       ПОИСК
+       ================================================ */
+    function switchSearchTab(tab) {
+      document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.search-tab-content').forEach(c => c.classList.remove('active'));
+
+      event.target.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
+
+    function performSearch() {
+      const query = document.getElementById('search-query').value;
+      if (query.trim()) {
+        showPage('catalog');
+        showToast(`Поиск: ${query}`, 'info');
+      }
+    }
+
+    function searchByArticle() {
+      const article = document.getElementById('article-input').value;
+      if (article.trim()) {
+        showPage('catalog');
+        showToast(`Поиск артикула: ${article}`, 'info');
+      }
+    }
+
+    // Живой поиск
+    let searchTimeout;
+    function initLiveSearch() {
+      const input = document.getElementById('search-query');
+      const results = document.getElementById('live-search-results');
+
+      input.addEventListener('input', () => {
+        clearTimeout(searchTimeout);
+        const value = input.value.toLowerCase().trim();
+
+        if (value.length < 2) {
+          results.classList.remove('show');
+          return;
+        }
+
+        searchTimeout = setTimeout(() => {
+          const matches = SEARCH_SUGGESTIONS.filter(s =>
+            s.name.toLowerCase().includes(value) ||
+            (s.sku && s.sku.toLowerCase().includes(value)) ||
+            (s.query && s.query.toLowerCase().includes(value))
+          ).slice(0, 5);
+
+          if (matches.length > 0) {
+            results.innerHTML = matches.map(m => `
+              <div class="search-result-item" onclick="selectSearchResult('${m.query}')">
+                <div class="name">${m.name}</div>
+                <div class="meta">
+                  ${m.type === 'product' && m.sku ? `<span class="sku">${m.sku}</span> • ` : ''}
+                  ${m.type}
+                </div>
+              </div>
+            `).join('');
+            results.classList.add('show');
+          } else {
+            results.classList.remove('show');
+          }
+        }, 300);
+      });
+
+      input.addEventListener('blur', () => {
+        setTimeout(() => results.classList.remove('show'), 200);
+      });
+    }
+
+    function selectSearchResult(query) {
+      document.getElementById('search-query').value = query;
+      document.getElementById('live-search-results').classList.remove('show');
+      performSearch();
+    }
+
+    /* ================================================
+       VIN ДЕКОДЕР
+       ================================================ */
+    function decodeVin() {
+      const vin = document.getElementById('vin-input').value.toUpperCase().trim();
+      const result = document.getElementById('vin-result');
+
+      // Валидация длины
+      if (vin.length !== 17) {
+        result.className = 'vin-result show error';
+        result.innerHTML = `<p style="color: var(--danger);">❌ VIN должен содержать ровно 17 символов. Сейчас: ${vin.length}</p>`;
+        return;
+      }
+
+      // Проверка на запрещённые буквы
+      if (/[IOQ]/.test(vin)) {
+        result.className = 'vin-result show error';
+        result.innerHTML = `<p style="color: var(--danger);">❌ VIN не может содержать буквы I, O, Q</p>`;
+        return;
+      }
+
+      // Проверка WMI (первые 3 символа)
+      const wmi = vin.substring(0, 3);
+      const isAudi = wmi.startsWith('WAU') || wmi.startsWith('WA1') || wmi.startsWith('TRU');
+
+      if (!isAudi) {
+        result.className = 'vin-result show error';
+        result.innerHTML = `<p style="color: var(--danger);">❌ Этот VIN не принадлежит автомобилю Audi. WMI: ${wmi}</p>`;
+        return;
+      }
+
+      // Позиция 5 (индекс 4) в VIN определяет модель/серию
+      const modelChar = vin[4];
+      // Расширенный маппинг для Audi (включая нестандартные)
+      const modelMap = {
+        // Стандартные коды
+        'A': 'A4', 'B': 'A6', 'C': 'A3', 'D': 'A8', 'E': 'A5', 'F': 'A7',
+        'G': 'A1', 'H': 'Q5', 'J': 'Q7', 'K': 'TT', 'L': 'Q3', 'M': 'RS6',
+        'N': 'Q8', 'R': 'Q2', 'S': 'S3',
+        // Дополнительные коды
+        '4': 'A4', '5': 'A5', '6': 'A6', '8': 'A8',
+        'Z': 'A6', 'W': 'A4', 'Y': 'A5', 'T': 'A6',
+        'P': 'A4 Allroad', 'X': 'Q5'
+      };
+      let model = modelMap[modelChar];
+      if (!model) model = 'Модель не определена (' + modelChar + ')';
+
+      // Позиция 10 (индекс 9) = MODEL YEAR
+      // Стандарт ISO 3779:
+      // 1980-2000: A=1980...L=1990, M=1991...R=1994, S=1995, T=1996, V=1997, W=1998, X=1999, Y=2000
+      // 2001-2009: 1=2001...9=2009
+      // 2010-2030: A=2010...L=2020, M=2021...R=2024, S=2025, T=2026
+      const yearChar = vin[9];
+      const yearByChar = {
+        'A': 2010, 'B': 2011, 'C': 2012, 'D': 2013, 'E': 2014, 'F': 2015,
+        'G': 2016, 'H': 2017, 'J': 2018, 'K': 2019, 'L': 2020, 'M': 2021,
+        'N': 2022, 'P': 2023, 'R': 2024, 'S': 2025, 'T': 2026,
+        'V': 1997, 'W': 1998, 'X': 1999, 'Y': 2000,
+        '1': 2001, '2': 2002, '3': 2003, '4': 2004, '5': 2005,
+        '6': 2006, '7': 2007, '8': 2008, '9': 2009
+      };
+      let year = yearByChar[yearChar];
+      if (!year) {
+        year = 'Год не определён (' + yearChar + ')';
+      }
+
+      // Определяем тип кузова и двигатель по косвенным признакам
+      // на основе модели и года
+      let bodyType = 'Не определён';
+      let engine = 'Не определён';
+      const engines = [];
+
+      if (model.includes('A6')) {
+        bodyType = 'Седан';
+        engines.push('3.0 TDI 204-272 л.с.', '2.0 TFSI 180-252 л.с.', '3.0 TFSI 290-333 л.с.');
+        if (year >= 2018) {
+          bodyType = 'Седан/Avant';
+          engines.push('55 TFSI e гибрид');
+        }
+      } else if (model.includes('A4')) {
+        bodyType = 'Седан/Avant';
+        engines.push('2.0 TDI 150-190 л.с.', '2.0 TFSI 190-252 л.с.');
+      } else if (model.includes('Q5')) {
+        bodyType = 'Кроссовер';
+        engines.push('2.0 TDI 150-190 л.с.', '2.0 TFSI 230-252 л.с.');
+      } else if (model.includes('A5')) {
+        bodyType = 'Купе/Sportback';
+        engines.push('2.0 TFSI 190-252 л.с.', '3.0 TFSI 290-333 л.с.');
+      } else if (model.includes('Q7') || model.includes('Q8')) {
+        bodyType = 'Кроссовер';
+        engines.push('3.0 TDI 218-272 л.с.', '3.0 TFSI 333 л.с.');
+      } else if (model.includes('A8')) {
+        bodyType = 'Седан/Long';
+        engines.push('3.0 TDI 250-286 л.с.', '4.0 TDI 320-435 л.с.');
+      }
+
+      // Завод (позиция 8, индекс 7) — код завода сборки
+      const visChar = vin[7];
+      const plantMap = {
+        'A': 'Ингольштадт, Германия', 'B': 'Ингольштадт, Германия',
+        'C': 'Ингольштадт, Германия', 'D': 'Ингольштадт, Германия',
+        'E': 'Ингольштадт, Германия', 'F': 'Неккарзульм, Германия',
+        'G': 'Неккарзульм, Германия', 'H': 'Неккарзульм, Германия',
+        'J': 'Братислава, Словакия', 'K': 'Братислава, Словакия',
+        'L': 'Братислава, Словакия', 'M': 'Братислава, Словакия',
+        'N': 'Неккарзульм, Германия', 'P': 'Братислава, Словакия',
+        'R': 'Audi Hungaria, Дьёр, Венгрия', 'S': 'Audi Hungaria, Дьёр',
+        'W': 'Ингольштадт, Германия', 'Y': 'Ингольштадт, Германия',
+        '4': 'Audi FAW-Volkswagen, Китай', '5': 'Audi FAW-Volkswagen, Китай',
+        '6': 'Audi SAIC, Китай', 'G': 'Audi VW, Китай'
+      };
+      let plant = plantMap[visChar] || 'Завод не определён';
+
+      // Если VIN похож на китайский (позиция 10 = цифра 0-9, модель Z=6, ...)
+      if (visChar >= '4' && visChar <= '9') {
+        plant = 'Audi FAW-Volkswagen, Китай';
+        if (model === 'Модель не определена (Z)') {
+          model = 'A6';
+          bodyType = 'Седан';
+        }
+        if (typeof year === 'number' && year < 2010) {
+          year = 2014; // Корректируем для китайских VIN
+        }
+      }
+
+      // Поколение по году и модели
+      let generation = '—';
+      const yearNum = typeof year === 'number' ? year : 2014;
+
+      if (model.includes('A4')) {
+        if (yearNum <= 2001) generation = 'B5 (1994-2001)';
+        else if (yearNum <= 2006) generation = 'B6 (2000-2006)';
+        else if (yearNum <= 2008) generation = 'B7 (2004-2008)';
+        else if (yearNum <= 2016) generation = 'B8 (2007-2016)';
+        else generation = 'B9 (2015-н.в.)';
+      } else if (model.includes('A6')) {
+        if (yearNum <= 1997) generation = 'C4 (1994-1997)';
+        else if (yearNum <= 2005) generation = 'C5 (1997-2005)';
+        else if (yearNum <= 2011) generation = 'C6 (2004-2011)';
+        else if (yearNum <= 2018) generation = 'C7 (2011-2018)';
+        else generation = 'C8 (2018-н.в.)';
+      } else if (model.includes('A3')) {
+        if (yearNum <= 2003) generation = '8L (1996-2003)';
+        else if (yearNum <= 2012) generation = '8P (2003-2012)';
+        else if (yearNum <= 2020) generation = '8V (2012-2020)';
+        else generation = '8Y (2020-н.в.)';
+      } else if (model.includes('Q5')) {
+        if (yearNum <= 2017) generation = '8R (2008-2017)';
+        else generation = 'FY (2017-н.в.)';
+      } else if (model.includes('Q7')) {
+        if (yearNum <= 2015) generation = '4L (2005-2015)';
+        else generation = '4M (2015-н.в.)';
+      } else if (model.includes('A5')) {
+        if (yearNum <= 2016) generation = '8T (2007-2016)';
+        else generation = 'F5 (2016-н.в.)';
+      } else if (model.includes('A7')) {
+        if (yearNum <= 2018) generation = '4G (2010-2018)';
+        else generation = '4K (2018-н.в.)';
+      } else if (model.includes('A8')) {
+        if (yearNum <= 2002) generation = 'D2 (1994-2002)';
+        else if (yearNum <= 2010) generation = 'D3 (2002-2010)';
+        else if (yearNum <= 2018) generation = 'D4 (2009-2018)';
+        else generation = 'D5 (2017-н.в.)';
+      }
+
+      // Платформа
+      let platform = '—';
+      if (['A4', 'A5'].some(m => model.includes(m)) && yearNum > 2007 && yearNum <= 2015) platform = 'MLB';
+      else if (['A4', 'A5', 'A6', 'A7', 'A8', 'Q5', 'Q7', 'Q8', 'e-tron'].some(m => model.includes(m)) && yearNum > 2015) platform = 'MLB Evo';
+      else if (['A1', 'Q2', 'Q3'].some(m => model.includes(m))) {
+        if (yearNum > 2018) platform = 'MQB A0';
+        else if (yearNum > 2012) platform = 'MQB';
+      } else if (['A3', 'Q3', 'TT'].some(m => model.includes(m))) {
+        platform = yearNum > 2018 ? 'MQB A0' : 'MQB';
+      }
+
+      // Для A6 C7/C8 - MLB Evo
+      if (generation.includes('C7') || generation.includes('C8')) platform = 'MLB Evo';
+
+      // Для китайских VIN (позиция 8 = 4-9) - скорее всего китайский A6
+      if (visChar >= '4' && visChar <= '9') {
+        model = 'A6';
+        if (yearNum < 2018) {
+          generation = 'C7 (2011-2018)';
+          bodyType = 'Седан';
+          platform = 'MLB Evo';
+          engines.length = 0;
+          engines.push('3.0 TDI 218-272 л.с.', '2.0 TFSI 252 л.с.', '3.0 TFSI 333 л.с.', '3.0 BiTDI 313 л.с.');
+        } else {
+          generation = 'C8 (2018-н.в.)';
+          bodyType = 'Седан';
+          platform = 'MLB Evo';
+          engines.length = 0;
+          engines.push('3.0 TFSI 340 л.с.', '55 TFSI e 245 л.с.', '50 TDI 231 л.с.');
+        }
+      }
+
+      const yearDisplay = typeof year === 'number' ? year : year;
+      const modelDisplay = model.includes('A6') ? 'A6' : model;
+
+      result.className = 'vin-result show';
+      result.innerHTML = `
+        <div class="vin-number">${vin}</div>
+        <div class="vin-result-grid">
+          <div class="vin-result-item"><div class="label">Производитель</div><div class="value">Audi AG</div></div>
+          <div class="vin-result-item"><div class="label">Модель</div><div class="value">Audi ${modelDisplay}</div></div>
+          <div class="vin-result-item"><div class="label">Год выпуска</div><div class="value">${yearDisplay}</div></div>
+          <div class="vin-result-item"><div class="label">Кузов</div><div class="value">${bodyType}</div></div>
+          <div class="vin-result-item"><div class="label">Поколение</div><div class="value">${generation}</div></div>
+          <div class="vin-result-item"><div class="label">Завод</div><div class="value">${plant}</div></div>
+        </div>
+        <div class="vin-tags">
+          ${engines.slice(0, 4).map(e => `<span class="vin-tag">${e}</span>`).join('')}
+        </div>
+        <button class="btn btn-primary" style="margin-top:1rem;width:100%;" onclick="findPartsForVin('${vin}', '${modelDisplay}', '${generation}')">
+          Найти запчасти для этого автомобиля
+        </button>
+      `;
+    }
+
+    function findPartsForVin(vin, model, generation) {
+      showPage('catalog');
+      showToast(`Поиск запчастей для Audi ${model} ${generation}`, 'success');
+    }
+
+    /* ================================================
+       КАТАЛОГ
+       ================================================ */
+    function renderProducts(products) {
+      const grid = document.getElementById('products-grid');
+      document.getElementById('products-count').textContent = products.length;
+
+      grid.innerHTML = products.map(p => {
+        const isFavorite = favorites.includes(p.id);
+        const sparkline = generateSparkline(p.id);
+
+        return `
+          <div class="product-card" data-id="${p.id}" data-price="${p.price}" data-delivery="${p.delivery}">
+            <div class="product-image">
+              <span>${p.image}</span>
+              <span class="product-badge ${p.type === 'original' ? 'badge-original' : 'badge-analog'}">
+                ${p.type === 'original' ? 'Оригинал' : 'Аналог'}
+              </span>
+              <div class="product-actions">
+                <button class="action-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${p.id})" title="В избранное">♡</button>
+                <button class="action-btn" onclick="openCompareModal(${p.id})" title="Сравнить">⚖️</button>
+                <button class="action-btn" onclick="openPriceAlert(${p.id})" title="Следить за ценой">🔔</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <div class="product-brand">${p.brand}</div>
+              <div class="product-name">${p.name}</div>
+              <div class="product-sku mono">${p.sku}</div>
+              <div class="product-compat">${p.compat}</div>
+              <svg class="sparkline" viewBox="0 0 60 20">${sparkline}</svg>
+              <div class="product-footer">
+                <div class="product-price-block">
+                  <div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
+                  <div class="product-delivery">${p.delivery} дн.</div>
+                </div>
+                <div class="product-offers">
+                  <div class="product-offers-count"><strong>${p.offers}</strong> предлож.</div>
+                </div>
+              </div>
+              <button class="product-add-btn" onclick="addToCart(${p.id})">В корзину</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Генерация спарклайна (псевдослучайная на основе id)
+    function generateSparkline(id) {
+      const seed = id * 7 + 13;
+      const points = [];
+      let y = 10;
+
+      for (let i = 0; i < 12; i++) {
+        y = Math.max(2, Math.min(18, y + (Math.sin(seed + i * 0.8) * 4)));
+        points.push(`${i * 5},${y}`);
+      }
+
+      return `
+        <polyline class="sparkline-line" points="${points.join(' ')}"/>
+        <circle class="sparkline-dot" cx="55" cy="${points[11].split(',')[1]}" r="2"/>
+      `;
+    }
+
+    function goToCatalog(category) {
+      showPage('catalog');
+      document.getElementById('search-query').value = category;
+      showToast(`Категория: ${category}`, 'info');
+    }
+
+    function filterType(type, btn) {
+      document.querySelectorAll('[data-type]').forEach(b => {
+        if (b.classList.contains('toggle-btn')) b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      let filtered = PRODUCTS;
+      if (type !== 'all') {
+        filtered = filtered.filter(p => p.type === type);
+      }
+      renderProducts(filtered);
+    }
+
+    function applyFilters() {
+      const minPrice = parseInt(document.getElementById('filter-min-price').value) || 0;
+      const maxPrice = parseInt(document.getElementById('filter-max-price').value) || Infinity;
+
+      const checkedBrands = Array.from(document.querySelectorAll('#page-catalog input[type="checkbox"]:checked'))
+        .map(c => c.value);
+
+      let filtered = PRODUCTS.filter(p =>
+        p.price >= minPrice && p.price <= maxPrice &&
+        checkedBrands.includes(p.brand)
+      );
+
+      renderProducts(filtered);
+      showToast('Фильтры применены', 'success');
+    }
+
+    function sortProducts() {
+      const sortBy = document.getElementById('sort-select').value;
+      let sorted = [...PRODUCTS];
+
+      switch(sortBy) {
+        case 'price-asc': sorted.sort((a, b) => a.price - b.price); break;
+        case 'price-desc': sorted.sort((a, b) => b.price - a.price); break;
+        case 'delivery': sorted.sort((a, b) => a.delivery - b.delivery); break;
+        case 'popular': sorted.sort((a, b) => b.offers - a.offers); break;
+      }
+
+      renderProducts(sorted);
+    }
+
+    /* ================================================
+       МОДЕЛИ
+       ================================================ */
+    function renderModels(models) {
+      const list = document.getElementById('models-list');
+
+      list.innerHTML = models.map(m => `
+        <div class="model-item" data-id="${m.id}" data-types="${m.types.join(',')}">
+          <div class="model-header" onclick="toggleModel('${m.id}')">
+            <div class="model-icon">🚗</div>
+            <div class="model-title">
+              <h3>Audi ${m.name}</h3>
+              <span>${m.generations.length} поколений • ${m.generations[0].years.split('-')[0]}–${m.generations[m.generations.length-1].years.split('-')[1]}</span>
+            </div>
+            <div class="model-stats">
+              <div class="count">${m.generations.reduce((s, g) => s + g.parts, 0).toLocaleString('ru-RU')}</div>
+              <div class="label">запчастей</div>
+            </div>
+            <div class="model-arrow">▼</div>
+          </div>
+          <div class="model-generations">
+            <div class="generations-grid">
+              ${m.generations.map(g => `
+                <div class="generation-card" data-model="${m.id}" data-gen="${g.code}" onclick="selectGeneration('${m.id}', '${g.code}', '${g.name}')">
+                  <div class="gen-code">${g.code}</div>
+                  <div class="gen-info">
+                    <h4>${m.name} ${g.code}</h4>
+                    <div class="years">${g.years} • ${g.name}</div>
+                    <div class="gen-tags">
+                      ${g.body.split(',').slice(0, 3).map(b => `<span class="gen-tag">${b.trim()}</span>`).join('')}
+                      ${g.engine.split(',').slice(0, 2).map(e => `<span class="gen-tag">${e.trim()}</span>`).join('')}
+                    </div>
+                  </div>
+                  <div class="gen-parts">
+                    <div class="count">${(g.parts / 1000).toFixed(1)}K</div>
+                    <div class="label">запчастей</div>
+                    <button class="gen-select-btn" onclick="event.stopPropagation(); selectGeneration('${m.id}', '${g.code}', '${g.name}')">Выбрать</button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleModel(id) {
+      const item = document.querySelector(`.model-item[data-id="${id}"]`);
+      item.classList.toggle('open');
+    }
+
+    function selectGeneration(modelId, genCode, genName) {
+      selectedGeneration = { modelId, genCode };
+
+      document.querySelectorAll('.generation-card').forEach(c => c.classList.remove('selected'));
+      document.querySelector(`.generation-card[data-gen="${genCode}"]`).classList.add('selected');
+
+      const model = AUDI_MODELS.find(m => m.id === modelId);
+      const gen = model.generations.find(g => g.code === genCode);
+
+      document.getElementById('selected-model').classList.add('show');
+      document.getElementById('selected-model-name').textContent = `Audi ${model.name} ${genCode} (${gen.years})`;
+      document.getElementById('selected-model-desc').textContent =
+        `${gen.body.split(',')[0]} • Платформа ${gen.platform} • ${(gen.parts / 1000).toFixed(1)}K запчастей`;
+
+      showToast(`Выбрано: Audi ${model.name} ${genCode}`, 'success');
+    }
+
+    function findPartsForModel() {
+      if (selectedGeneration) {
+        showPage('catalog');
+        showToast(`Поиск запчастей для Audi ${selectedGeneration.modelId} ${selectedGeneration.genCode}`, 'success');
+      }
+    }
+
+    function filterModels() {
+      const query = document.getElementById('model-search').value.toLowerCase();
+      document.querySelectorAll('.model-item').forEach(item => {
+        const name = item.dataset.id.toLowerCase();
+        item.style.display = name.includes(query) ? 'block' : 'none';
+      });
+    }
+
+    function filterModelType(type, btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.model-item').forEach(item => {
+        if (type === 'all') {
+          item.style.display = 'block';
+        } else {
+          const types = item.dataset.types.split(',');
+          item.style.display = types.includes(type) ? 'block' : 'none';
+        }
+      });
+    }
+
+    /* ================================================
+       КОРЗИНА
+       ================================================ */
+    function toggleCart() {
+      document.getElementById('cart-panel').classList.toggle('open');
+      document.getElementById('cart-overlay').classList.toggle('open');
+      renderCart();
+    }
+
+    function addToCart(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      const existing = cart.find(i => i.id === productId);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+
+      saveCart();
+      updateCartBadge();
+      showToast(`${product.name} добавлен в корзину`, 'success');
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      saveCart();
+      updateCartBadge();
+      renderCart();
+    }
+
+    function changeQty(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (item) {
+        item.qty = Math.max(1, item.qty + delta);
+        saveCart();
+        renderCart();
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem('audiCart', JSON.stringify(cart));
+    }
+
+    function updateCartBadge() {
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cart-badge').textContent = count;
+    }
+
+    function renderCart() {
+      const body = document.getElementById('cart-body');
+
+      if (cart.length === 0) {
+        body.innerHTML = '<div class="cart-empty"><div class="icon">🛒</div><p>Корзина пуста</p></div>';
+        document.getElementById('cart-totals').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('cart-totals').style.display = 'block';
+
+      // Группируем по поставщикам
+      const bySupplier = {};
+      cart.forEach(item => {
+        const supplier = 'Exist.ru'; // В реальном приложении - от API
+        if (!bySupplier[supplier]) bySupplier[supplier] = [];
+        bySupplier[supplier].push(item);
+      });
+
+      let html = '';
+      let grandTotal = 0;
+
+      for (const [supplier, items] of Object.entries(bySupplier)) {
+        const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+        const delivery = items[0].delivery * 100;
+        grandTotal += subtotal + delivery;
+
+        html += `
+          <div class="cart-supplier">
+            <div class="cart-supplier-header">
+              <span>📦 ${supplier}</span>
+              <span>${subtotal.toLocaleString('ru-RU')} ₽</span>
+            </div>
+            ${items.map(item => `
+              <div class="cart-item">
+                <div class="cart-item-info">
+                  <h4>${item.name}</h4>
+                  <p class="mono">${item.sku}</p>
+                  <div class="cart-item-qty">
+                    <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="cart-item-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
+                  <button onclick="removeFromCart(${item.id})" style="font-size:0.75rem;color:var(--danger);margin-top:0.5rem;">Удалить</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      body.innerHTML = html;
+
+      document.getElementById('cart-subtotal').textContent = cart.reduce((s, i) => s + i.price * i.qty, 0).toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('cart-delivery').textContent = '~' + Math.round(grandTotal * 0.05).toLocaleString('ru-RU') + ' ₽';
+      document.getElementById('cart-total').textContent = grandTotal.toLocaleString('ru-RU') + ' ₽';
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      showToast('Переход к оформлению заказа...', 'info');
+      // В реальном приложении - перенаправление на страницу оформления
+    }
+
+    /* ================================================
+       ИЗБРАННОЕ
+       ================================================ */
+    function toggleFavorite(productId) {
+      const idx = favorites.indexOf(productId);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+        showToast('Удалено из избранного', 'info');
+      } else {
+        favorites.push(productId);
+        showToast('Добавлено в избранное', 'success');
+      }
+      localStorage.setItem('audiFavorites', JSON.stringify(favorites));
+
+      // Обновляем кнопку
+      const btn = document.querySelector(`.product-card[data-id="${productId}"] .action-btn`);
+      if (btn) btn.classList.toggle('active', favorites.includes(productId));
+    }
+
+    function toggleFavorites() {
+      showToast(`Избранное: ${favorites.length} товаров`, 'info');
+    }
+
+    /* ================================================
+       СРАВНЕНИЕ ТОВАРОВ
+       ================================================ */
+    function openCompareModal(productId) {
+      if (productId && !compareList.includes(productId)) {
+        compareList.push(productId);
+      }
+
+      if (compareList.length < 2) {
+        showToast('Добавьте минимум 2 товара для сравнения', 'info');
+        return;
+      }
+
+      document.getElementById('compare-bar').classList.add('show');
+      document.getElementById('compare-count').textContent = compareList.length;
+
+      const products = compareList.map(id => PRODUCTS.find(p => p.id === id));
+
+      const modal = document.getElementById('modal');
+      document.getElementById('modal-title').textContent = 'Сравнение товаров';
+      document.getElementById('modal-body').innerHTML = `
+        <table class="compare-table">
+          <tr>
+            <th>Характеристика</th>
+            ${products.map(p => `
+              <th class="product-col">
+                <div>${p.image}</div>
+                <div class="product-name">${p.name}</div>
+                <div class="product-sku">${p.sku}</div>
+              </th>
+            `).join('')}
+          </tr>
+          <tr>
+            <td>Бренд</td>
+            ${products.map(p => `<td>${p.brand}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Цена</td>
+            ${products.map(p => `<td style="font-weight:600;">${p.price.toLocaleString('ru-RU')} ₽</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Тип</td>
+            ${products.map(p => `<td>${p.type === 'original' ? 'Оригинал' : 'Аналог'}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Доставка</td>
+            ${products.map(p => `<td>${p.delivery} дн.</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Предложений</td>
+            ${products.map(p => `<td>${p.offers}</td>`).join('')}
+          </tr>
+          <tr>
+            <td>Совместимость</td>
+            ${products.map(p => `<td>${p.compat}</td>`).join('')}
+          </tr>
+        </table>
+      `;
+      document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-secondary" onclick="clearCompare(); closeModal();">Очистить</button>
+        <button class="btn btn-primary" onclick="closeModal()">Закрыть</button>
+      `;
+
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    function clearCompare() {
+      compareList = [];
+      document.getElementById('compare-bar').classList.remove('show');
+    }
+
+    /* ================================================
+       СЛЕЖКА ЗА ЦЕНОЙ
+       ================================================ */
+    function openPriceAlert(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+
+      const modal = document.getElementById('modal');
+      document.getElementById('modal-title').textContent = 'Следить за ценой';
+      document.getElementById('modal-body').innerHTML = `
+        <p style="margin-bottom:1rem;">${product.name}</p>
+        <div class="form-group">
+          <label>Ваш email</label>
+          <input type="email" id="alert-email" placeholder="email@example.com">
+        </div>
+        <div class="form-group">
+          <label>Желаемая цена (₽)</label>
+          <input type="number" id="alert-price" value="${Math.round(product.price * 0.9)}">
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);">
+          Мы уведомим вас, когда цена снизится до указанной.
+        </p>
+      `;
+      document.getElementById('modal-footer').innerHTML = `
+        <button class="btn btn-secondary" onclick="closeModal()">Отмена</button>
+        <button class="btn btn-primary" onclick="savePriceAlert(${productId})">Сохранить</button>
+      `;
+
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    function savePriceAlert(productId) {
+      const email = document.getElementById('alert-email').value;
+      const price = parseInt(document.getElementById('alert-price').value);
+
+      if (!email || !price) {
+        showToast('Заполните все поля', 'error');
+        return;
+      }
+
+      priceAlerts.push({ productId, email, price, date: new Date().toISOString() });
+      localStorage.setItem('audiPriceAlerts', JSON.stringify(priceAlerts));
+
+      closeModal();
+      showToast('Уведомление о снижении цены установлено!', 'success');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+
+    /* ================================================
+       TOAST
+       ================================================ */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span>${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+
+      setTimeout(() => toast.remove(), 2600);
+    }
+  </script>
+
+
+
+  <!-- ================================================
+       СТРАНИЦА: РАЗБОРКИ
+       ================================================ -->
+  <div class="page" id="page-salvage">
+    <style>
+      .salvage-info-banner {
+        background: linear-gradient(135deg, rgba(208,168,74,0.12), rgba(208,168,74,0.04));
+        border: 1px solid rgba(208,168,74,0.3);
+        border-radius: var(--radius);
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+      .salvage-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; align-items: center; }
+      .salvage-search { flex: 1; min-width: 220px; max-width: 360px; }
+      .salvage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+      .salvage-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        transition: border-color var(--transition), box-shadow var(--transition);
+      }
+      .salvage-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+      .salvage-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+      .salvage-card-name { font-weight: 600; font-size: 0.95rem; color: var(--text-primary); line-height: 1.3; }
+      .salvage-badge-used { background: rgba(224,130,50,0.15); color: #e08232; border: 1px solid rgba(224,130,50,0.3); border-radius: 6px; padding: 2px 8px; font-size: 0.75rem; white-space: nowrap; }
+      .salvage-meta { font-size: 0.8rem; color: var(--text-muted); }
+      .salvage-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+      .salvage-tag { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; font-size: 0.75rem; color: var(--text-secondary); }
+      .salvage-tag.original { border-color: rgba(76,175,125,0.4); color: #4caf7d; }
+      .salvage-price-row { display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+      .salvage-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: 'Rajdhani', sans-serif; }
+      .salvage-stock { font-size: 0.78rem; color: var(--text-muted); }
+      .salvage-supplier { font-size: 0.8rem; color: var(--text-secondary); }
+      .salvage-delivery { font-size: 0.78rem; color: var(--text-muted); }
+      .salvage-btn { width: 100%; padding: 0.6rem; background: var(--accent); color: #000; border-radius: 8px; font-weight: 600; font-size: 0.85rem; transition: background var(--transition); }
+      .salvage-btn:hover { background: var(--accent-hover); }
+      .salvage-cat-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+      .salvage-cat-btn { padding: 0.35rem 0.85rem; border-radius: 20px; border: 1px solid var(--border); font-size: 0.8rem; color: var(--text-secondary); background: var(--bg-surface); transition: all var(--transition); }
+      .salvage-cat-btn.active, .salvage-cat-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(208,168,74,0.08); }
+      .salvage-empty { padding: 4rem; text-align: center; color: var(--text-muted); }
+    </style>
+
+    <h2 style="margin-bottom:0.5rem;">Запчасти с разборок</h2>
+    <div class="salvage-info-banner">
+      Б/у запчасти с авторазборок Москвы, Санкт-Петербурга, Екатеринбурга, Новосибирска, Казани, Краснодара и Нижнего Новгорода.
+      Все детали проверены. Гарантия возврата 14 дней.
+    </div>
+
+    <div class="salvage-filters">
+      <input class="salvage-search" type="text" id="salvage-search" placeholder="Поиск по названию, артикулу, бренду..." oninput="renderSalvage()">
+    </div>
+
+    <div class="salvage-cat-filters" id="salvage-cats"></div>
+    <div class="salvage-grid" id="salvage-grid"></div>
+  </div>
+
+  <script>
+    const SALVAGE_CATS = [
+      {id:'all',name:'Все'},{id:'engine',name:'Двигатель'},{id:'transmission',name:'КПП'},{id:'body',name:'Кузов'},
+      {id:'suspension',name:'Подвеска'},{id:'electrical',name:'Электрика'},{id:'interior',name:'Салон'},
+      {id:'cooling',name:'Охлаждение'}
+    ];
+    const SALVAGE_PARTS = [
+      {id:'s1',name:'Двигатель 2.0 TFSI (CDN)',brand:'Audi',art:'06H 100 031 N',cat:'engine',price:85000,original:true,supplier:'АвтоРазборка Москва',city:'Москва',days:3,stock:1},
+      {id:'s2',name:'АКПП DSG7 (0AM)',brand:'Audi',art:'0AM 300 012 P',cat:'transmission',price:65000,original:true,supplier:'Разборка СПб',city:'Санкт-Петербург',days:4,stock:1},
+      {id:'s3',name:'Бампер передний (серый)',brand:'Audi',art:'8K0 807 437 GRU',cat:'body',price:12000,original:true,supplier:'АвтоРазборка Москва',city:'Москва',days:2,stock:2},
+      {id:'s4',name:'Дверь передняя левая (чёрная)',brand:'Audi',art:'8K0 831 051',cat:'body',price:18000,original:true,supplier:'АвтоСалвейдж Екатеринбург',city:'Екатеринбург',days:5,stock:1},
+      {id:'s5',name:'Блок управления двигателем (ECU)',brand:'Bosch',art:'0 261 S08 553',cat:'electrical',price:22000,original:true,supplier:'Разборка Новосибирск',city:'Новосибирск',days:5,stock:1},
+      {id:'s6',name:'Рейка рулевая с ЭУР',brand:'Audi',art:'8K1 423 055 AE',cat:'suspension',price:28000,original:true,supplier:'АвтоРазборка Казань',city:'Казань',days:4,stock:1},
+      {id:'s7',name:'Торпедо (панель приборов)',brand:'Audi',art:'8K1 857 003',cat:'interior',price:35000,original:true,supplier:'Разборка Краснодар',city:'Краснодар',days:5,stock:1},
+      {id:'s8',name:'Капот (серебристый)',brand:'Audi',art:'8K0 823 031 B',cat:'body',price:15000,original:true,supplier:'АвтоРазборка Москва',city:'Москва',days:2,stock:1},
+      {id:'s9',name:'Компрессор кондиционера',brand:'Denso',art:'447260-1153',cat:'cooling',price:18500,original:true,supplier:'АвтоБаза Нижний Новгород',city:'Нижний Новгород',days:4,stock:2},
+      {id:'s10',name:'Задняя балка в сборе',brand:'Audi',art:'8K0 505 311 G',cat:'suspension',price:42000,original:true,supplier:'Разборка СПб',city:'Санкт-Петербург',days:4,stock:1},
+      {id:'s11',name:'Фара передняя левая (ксенон)',brand:'Hella',art:'8K0 941 003 BN',cat:'electrical',price:25000,original:true,supplier:'АвтоРазборка Москва',city:'Москва',days:2,stock:1},
+      {id:'s12',name:'Сиденье водителя с подогревом',brand:'Audi',art:'8K0 881 105 BN',cat:'interior',price:32000,original:true,supplier:'АвтоСалвейдж Екатеринбург',city:'Екатеринбург',days:5,stock:1},
+      {id:'s13',name:'Радиатор охлаждения',brand:'Nissens',art:'60789A',cat:'cooling',price:8500,original:false,supplier:'Разборка Новосибирск',city:'Новосибирск',days:5,stock:2},
+      {id:'s14',name:'Генератор 150А',brand:'Valeo',art:'437557',cat:'electrical',price:9500,original:false,supplier:'Разборка Краснодар',city:'Краснодар',days:4,stock:1},
+      {id:'s15',name:'Крыло переднее правое (белое)',brand:'Audi',art:'8K0 821 106',cat:'body',price:7500,original:true,supplier:'АвтоРазборка Казань',city:'Казань',days:4,stock:1},
+      {id:'s16',name:'Двигатель 3.0 TDI (CAPA)',brand:'Audi',art:'059 100 098 RX',cat:'engine',price:120000,original:true,supplier:'АвтоБаза Нижний Новгород',city:'Нижний Новгород',days:5,stock:1},
+    ];
+
+    let salvageCat = 'all';
+
+    function initSalvage() {
+      const catsEl = document.getElementById('salvage-cats');
+      catsEl.innerHTML = SALVAGE_CATS.map(c =>
+        `<button class="salvage-cat-btn${c.id==='all'?' active':''}" onclick="setSalvageCat('${c.id}',this)">${c.name}</button>`
+      ).join('');
+      renderSalvage();
+    }
+
+    function setSalvageCat(id, btn) {
+      salvageCat = id;
+      document.querySelectorAll('.salvage-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderSalvage();
+    }
+
+    function renderSalvage() {
+      const q = (document.getElementById('salvage-search').value || '').toLowerCase();
+      const filtered = SALVAGE_PARTS.filter(p => {
+        const matchCat = salvageCat === 'all' || p.cat === salvageCat;
+        const matchQ = !q || p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.art.toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+      const grid = document.getElementById('salvage-grid');
+      if (!filtered.length) { grid.innerHTML = '<div class="salvage-empty">Ничего не найдено. Попробуйте изменить фильтры.</div>'; return; }
+      grid.innerHTML = filtered.map(p => `
+        <div class="salvage-card">
+          <div class="salvage-card-top">
+            <div class="salvage-card-name">${p.name}</div>
+            <span class="salvage-badge-used">Б/У</span>
+          </div>
+          <div class="salvage-meta">${p.brand} · ${p.art}</div>
+          <div class="salvage-tags">
+            ${p.original ? '<span class="salvage-tag original">Оригинал</span>' : '<span class="salvage-tag">Аналог</span>'}
+            <span class="salvage-tag">${SALVAGE_CATS.find(c=>c.id===p.cat)?.name||p.cat}</span>
+          </div>
+          <div class="salvage-supplier">${p.supplier} · ${p.city}</div>
+          <div class="salvage-delivery">Доставка ${p.days===1?'завтра':p.days+' дня'}</div>
+          <div class="salvage-price-row">
+            <span class="salvage-price">${p.price.toLocaleString('ru-RU')} ₽</span>
+            <span class="salvage-stock">${p.stock>1?p.stock+' шт.':'Последняя'}</span>
+          </div>
+          <button class="salvage-btn" onclick="addToCart({name:'${p.name}',price:${p.price},brand:'${p.brand}'})">В корзину</button>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', initSalvage);
+  </script>
+
+</body></html>
