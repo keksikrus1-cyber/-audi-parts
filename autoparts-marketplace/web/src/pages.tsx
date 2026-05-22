@@ -3,6 +3,9 @@ import { Link, Outlet } from '@tanstack/react-router'
 import { Header } from '@/components/layout/Header'
 import { CartProvider } from '@/components/cart/CartProvider'
 import { CartDrawer } from '@/components/cart/CartDrawer'
+import { LocalUiProvider } from '@/components/local-ui/LocalUiProvider'
+import { CompareBar } from '@/components/compare/CompareBar'
+import { CompareModal } from '@/components/compare/CompareModal'
 import { HomeHero } from '@/components/home/HomeHero'
 import { SearchForm } from '@/components/home/SearchForm'
 import { PopularCategories } from '@/components/home/PopularCategories'
@@ -23,13 +26,17 @@ import { useAuth } from '@/lib/use-auth'
 
 export function RootLayout() {
   return (
-    <CartProvider>
-      <main className="min-h-svh bg-background text-foreground">
-        <Header />
-        <Outlet />
-        <CartDrawer />
-      </main>
-    </CartProvider>
+    <LocalUiProvider>
+      <CartProvider>
+        <main className="min-h-svh bg-background text-foreground">
+          <Header />
+          <Outlet />
+          <CartDrawer />
+          <CompareBar />
+          <CompareModal />
+        </main>
+      </CartProvider>
+    </LocalUiProvider>
   )
 }
 
