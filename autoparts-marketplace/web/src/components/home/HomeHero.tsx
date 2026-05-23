@@ -13,14 +13,14 @@ export function HomeHero({ children }: { children: React.ReactNode }) {
           Найдите лучшую цену на{' '}
           <span style={{ color: 'var(--ap-accent)' }}>любую запчасть</span> Audi
         </h1>
-        <p className="ap-text-secondary" style={{ fontSize: '1.1rem', marginBottom: '2rem' }}>
+        <p className="ap-hero-description">
           Агрегатор запчастей для всех моделей Audi. Сравниваем цены от Exist.ru, Emex.ru, Autodoc и Avtoall в одном месте.
         </p>
         <div className="ap-hero-stats">
           {STATS.map(s => (
             <div key={s.label} className="ap-stat-card">
-              <div className="ap-mono" style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--ap-accent)' }}>{s.value}</div>
-              <div className="ap-text-muted" style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>{s.label}</div>
+              <div className="ap-stat-value">{s.value}</div>
+              <div className="ap-stat-label">{s.label}</div>
             </div>
           ))}
         </div>

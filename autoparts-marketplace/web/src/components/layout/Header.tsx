@@ -46,23 +46,15 @@ export function Header() {
           <div className="ap-header-actions">
             <ThemeToggle />
             <button className="ap-icon-btn" title="Уведомления">
-              🔔<span className="ap-badge ap-badge-accent" style={{ position: 'absolute', top: '-4px', right: '-4px', minWidth: '18px', textAlign: 'center' }}>3</span>
+              🔔<span className="ap-icon-btn-badge">3</span>
             </button>
             <button className="ap-icon-btn" title="Избранное">
               {favCount > 0 ? '♥' : '♡'}
-              {favCount > 0 && (
-                <span className="ap-badge ap-badge-accent" style={{ position: 'absolute', top: '-4px', right: '-4px', minWidth: '18px', textAlign: 'center' }}>
-                  {favCount}
-                </span>
-              )}
+              {favCount > 0 && <span className="ap-icon-btn-badge">{favCount}</span>}
             </button>
             <button className="ap-icon-btn" title="Корзина" onClick={() => setOpen(true)}>
               🛒
-              {count > 0 && (
-                <span className="ap-badge ap-badge-accent" style={{ position: 'absolute', top: '-4px', right: '-4px', minWidth: '18px', textAlign: 'center' }}>
-                  {count}
-                </span>
-              )}
+              {count > 0 && <span className="ap-icon-btn-badge">{count}</span>}
             </button>
             <button className="ap-btn ap-btn-primary ap-btn-small">Войти</button>
             <button className="ap-hamburger" onClick={() => setMobileOpen(true)}>☰</button>

@@ -54,10 +54,13 @@ export function HomePage() {
 
 export function ComingSoonPage({ title }: { title: string }) {
   return (
-    <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
-      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚧</div>
-      <h2 className="ap-heading-lg" style={{ marginBottom: '0.75rem' }}>{title}</h2>
-      <p className="ap-text-muted">Раздел находится в разработке. Скоро будет доступен.</p>
+    <div className="ap-coming-soon">
+      <div className="ap-coming-soon-icon">🚧</div>
+      <h2 className="ap-heading-lg ap-coming-soon-title">{title}</h2>
+      <p className="ap-coming-soon-desc">
+        Этот раздел находится в разработке и скоро будет доступен.
+      </p>
+      <a href="/catalog" className="ap-btn ap-btn-primary">Перейти в каталог</a>
     </div>
   )
 }

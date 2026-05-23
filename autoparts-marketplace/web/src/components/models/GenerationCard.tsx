@@ -16,8 +16,8 @@ export function GenerationCard({ model, gen, selected, onSelect }: GenerationCar
     >
       <div className="ap-gen-code">{gen.code}</div>
       <div className="ap-gen-info">
-        <h4 style={{ marginBottom: '0.5rem', fontWeight: 600 }}>{model.id} {gen.code}</h4>
-        <div className="ap-text-secondary" style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>{gen.years}</div>
+        <h4 className="ap-gen-title">{model.id} {gen.code}</h4>
+        <div className="ap-gen-years">{gen.years}</div>
         <div className="ap-gen-tags">
           {[...gen.body, ...gen.engines].map(t => (
             <span key={t} className="ap-gen-tag">{t}</span>
@@ -25,8 +25,8 @@ export function GenerationCard({ model, gen, selected, onSelect }: GenerationCar
         </div>
       </div>
       <div className="ap-gen-parts">
-        <div className="ap-mono" style={{ fontSize: '1.1rem', fontWeight: 600 }}>{gen.parts}</div>
-        <div className="ap-text-muted" style={{ fontSize: '0.7rem' }}>запчастей</div>
+        <div className="ap-gen-count">{gen.parts}</div>
+        <div className="ap-gen-count-label">запчастей</div>
         <button
           className="ap-gen-select-btn"
           onClick={e => { e.stopPropagation(); onSelect({ model, gen }) }}

@@ -8,8 +8,9 @@ interface ProductsGridProps {
 export function ProductsGrid({ products }: ProductsGridProps) {
   if (products.length === 0) {
     return (
-      <div style={{ padding: '4rem 1rem', textAlign: 'center', color: 'var(--ap-text-muted)' }}>
-        Ничего не найдено. Попробуйте изменить фильтры.
+      <div className="ap-empty-state">
+        <div className="ap-empty-state-icon">🔍</div>
+        <div className="ap-empty-state-text">Ничего не найдено.<br />Попробуйте изменить фильтры.</div>
       </div>
     )
   }

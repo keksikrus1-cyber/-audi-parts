@@ -978,3 +978,55 @@
 @media (max-width: 600px) {
   .ap-vin-result-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Polish: utility classes to replace inline styles ───────── */
+
+/* Hero */
+.ap-hero-description { font-size: 1.1rem; margin-bottom: 2rem; color: var(--ap-text-secondary); line-height: 1.6; }
+.ap-stat-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.5rem; font-weight: 600; color: var(--ap-accent); }
+.ap-stat-label { font-size: 0.8rem; margin-top: 0.25rem; color: var(--ap-text-muted); }
+
+/* Product card detail classes */
+.ap-product-sku    { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--ap-text-muted); margin-bottom: 0.5rem; }
+.ap-product-compat {
+  font-size: 0.75rem; color: var(--ap-text-secondary); margin-bottom: 0.75rem;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.ap-product-price    { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; font-weight: 600; }
+.ap-product-delivery { font-size: 0.75rem; color: var(--ap-text-muted); }
+.ap-product-offers   { font-size: 0.8rem; color: var(--ap-text-secondary); text-align: right; }
+.ap-product-offers strong { color: var(--ap-accent); }
+.ap-product-add-btn {
+  width: 100%; margin-top: 0.75rem; padding: 0.6rem;
+  font-size: 0.85rem; border-radius: 8px;
+  background: var(--ap-accent); color: var(--ap-bg-primary);
+  border: none; cursor: pointer; font-weight: 600; font-family: inherit;
+  transition: all var(--ap-transition);
+}
+.ap-product-add-btn:hover { background: var(--ap-accent-hover); transform: translateY(-1px); }
+
+/* Generation card detail classes */
+.ap-gen-title       { font-weight: 600; margin-bottom: 0.5rem; }
+.ap-gen-years       { font-size: 0.9rem; color: var(--ap-text-secondary); margin-bottom: 0.5rem; }
+.ap-gen-count       { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; font-weight: 600; }
+.ap-gen-count-label { font-size: 0.7rem; color: var(--ap-text-muted); }
+
+/* Header badge — replaces inline positioning */
+.ap-icon-btn-badge {
+  position: absolute; top: -4px; right: -4px;
+  background: var(--ap-accent); color: var(--ap-bg-primary);
+  font-size: 0.65rem; font-weight: 600;
+  padding: 0.15rem 0.4rem; border-radius: 10px;
+  min-width: 18px; text-align: center; line-height: 1.4;
+}
+
+/* Coming soon page */
+.ap-coming-soon       { padding: 6rem 2rem; text-align: center; max-width: 480px; margin: 0 auto; }
+.ap-coming-soon-icon  { font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.7; }
+.ap-coming-soon-title { margin-bottom: 1rem; }
+.ap-coming-soon-desc  { color: var(--ap-text-muted); margin-bottom: 2rem; line-height: 1.6; font-size: 1rem; }
+
+/* Improved empty state */
+.ap-empty-state      { padding: 5rem 1rem; text-align: center; color: var(--ap-text-muted); }
+.ap-empty-state-icon { font-size: 3.5rem; opacity: 0.4; margin-bottom: 1rem; }
+.ap-empty-state-text { font-size: 0.95rem; line-height: 1.6; }
