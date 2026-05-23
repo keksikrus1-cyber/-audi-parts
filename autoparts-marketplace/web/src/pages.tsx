@@ -28,7 +28,7 @@ export function RootLayout() {
   return (
     <LocalUiProvider>
       <CartProvider>
-        <main className="min-h-svh bg-background text-foreground">
+        <main className="ap-page">
           <Header />
           <Outlet />
           <CartDrawer />

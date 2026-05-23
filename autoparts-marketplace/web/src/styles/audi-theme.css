@@ -1120,3 +1120,42 @@
   .ap-search-form { padding: 1.25rem; }
   .ap-hero { gap: 1.5rem; }
 }
+
+/* ── Theme consistency: explicit text colors on all surfaces ─ */
+/* Prevents Tailwind/shadcn default colors from leaking into ap-* components */
+.ap-page,
+.ap-home,
+.ap-catalog-page,
+.ap-models-page {
+  background: var(--ap-bg-primary);
+  color: var(--ap-text-primary);
+  min-height: 100vh;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.ap-surface,
+.ap-card,
+.ap-stat-card,
+.ap-category-card,
+.ap-product-card,
+.ap-model-item,
+.ap-generation-card,
+.ap-search-form,
+.ap-filters-sidebar,
+.ap-comparison-table,
+.ap-cart-panel,
+.ap-modal {
+  color: var(--ap-text-primary);
+}
+
+/* Ensure headings inside ap-* use correct color */
+.ap-page h1, .ap-page h2, .ap-page h3, .ap-page h4,
+.ap-home h1, .ap-home h2, .ap-home h3, .ap-home h4 {
+  color: var(--ap-text-primary);
+}
+
+/* body baseline when ap-page is root */
+body:has(.ap-page) {
+  background: var(--ap-bg-primary);
+  color: var(--ap-text-primary);
+}
