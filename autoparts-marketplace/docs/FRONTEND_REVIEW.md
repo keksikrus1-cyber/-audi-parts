@@ -1,6 +1,6 @@
 # Frontend MVP Review
 
-Дата: 2026-05-23. Состояние после переноса HTML-макета в React.
+Дата: 2026-05-24. Обновлено после добавления toast-системы.
 
 ## Что реализовано
 
@@ -8,6 +8,7 @@
 - `web/src/styles/audi-theme.css` — CSS-переменные dark/light, `.ap-*` классы для всех компонентов
 - Google Fonts: IBM Plex Sans, IBM Plex Mono, Rajdhani
 - Переключатель темы с `data-theme` на `documentElement` + `localStorage`
+- Inline script в `index.html` — тема применяется до первого рендера (нет flash)
 
 ### Layout
 - `Header` — sticky, логотип с 4 кольцами CSS, desktop nav, ThemeToggle, badges корзины и избранного, hamburger
@@ -16,15 +17,15 @@
 
 ### Главная страница (`/`)
 - `HomeHero` — заголовок с акцентом, статистика 2×2
-- `SearchForm` — 3 таба: по запросу / VIN / артикул
+- `SearchForm` — 3 таба: по запросу / VIN / артикул; поиск → navigate `/catalog`
 - `VIN decoder` — mock логика (WMI, модель, год, поколение, завод, двигатели)
-- `PopularCategories` — 8 категорий из `data/categories.ts`
+- `PopularCategories` — 8 категорий, клик → navigate `/catalog`
 - `PriceComparisonTable` — 4 поставщика из `data/priceComparison.ts`
 
 ### Каталог (`/catalog`)
 - `CatalogFilters` — тип, цена, бренды, доставка, поставщики
 - `ProductsGrid` — auto-fill сетка, empty state
-- `ProductCard` — badge, action buttons, цена, "В корзину"
+- `ProductCard` — badge, action buttons, цена, "В корзину" (toast success)
 - `SortSelect` — 4 варианта сортировки
 - Фильтрация и сортировка на `useState`/`useMemo`
 
@@ -48,6 +49,13 @@
 ### Сравнение
 - `CompareBar` — fixed bottom bar при ≥2 товарах
 - `CompareModal` — таблица 7 характеристик
+
+### Toast-уведомления ✅ (добавлено)
+- `ToastProvider` — React Context, `showToast(message, type)`, авто-скрытие 2.8с, стек
+- Типы: `success` (зелёный), `error` (красный), `info` (синий)
+- "В корзину" → toast success
+- "Оформить заказ" → toast info (вместо `alert()`)
+- "Следить за ценой" → toast info (вместо `alert()`)
 
 ### Данные (mock)
 - `data/audiModels.ts` — 14 моделей, полные поколения, типы
@@ -74,54 +82,63 @@
 | Compare state | ✅ |
 | Theme localStorage | ✅ |
 | VIN decoder mock | ✅ |
+| Toast notifications | ✅ |
 | Typecheck | ✅ чистый |
 | Dev server | ✅ HTTP 200 |
 
 ## Что остаётся mock-заглушкой
 
-- Поиск по запросу и артикулу — `console.log`, без реального поиска
-- "В корзину" открывает drawer, но supplier всегда `Exist.ru` (mock)
+- Поиск по запросу/артикулу — navigate `/catalog` без реальной фильтрации
+- "В корзину" — supplier всегда `Exist.ru` (mock)
 - "Найти запчасти" из VIN decoder → `/catalog` без фильтрации по модели
-- "Оформить заказ" → `console.log`
-- "Следить за ценой" → `console.log`
-- `/salvage` и `/sto` — заглушки
+- "Оформить заказ" → toast info (без Order API)
+- "Следить за ценой" → toast info (без backend)
+- `/salvage` и `/sto` — заглушки "скоро"
 - `/app` — шаблонный auth UI из vibe template
+- Уведомления в Header — badge "3" статичный
 
-## Что нужно сделать перед backend
+## Frontend mock MVP готов к backend integration
 
-1. Убедиться, что Prisma schema покрывает все сущности из `MVP_PLAN.md`
-2. Подготовить seed-данные на основе `data/*.ts`
-3. Определить контракты API (Zod schemas в `packages/contracts`)
-4. Настроить Docker Compose PostgreSQL (уже есть в шаблоне)
+Все подготовительные шаги выполнены:
+
+| Шаг | Статус |
+|-----|--------|
+| Prisma schema (User, Part, Supplier, Offer, CartItem, Favorite, VinRequest, Order) | ✅ |
+| Seed-файл (`backend/prisma/seed.ts`) | ✅ |
+| Shared contracts (`packages/contracts`) | ✅ |
+| API implementation plan (`docs/API_IMPLEMENTATION_PLAN.md`) | ✅ |
+
+**Следующий шаг после установки Docker:**
+```bash
+docker compose up -d postgres
+bun run --cwd backend prisma:migrate
+bun run --cwd backend prisma:seed
+# затем реализовать API routes по docs/API_IMPLEMENTATION_PLAN.md
+```
+
+## Что нужно сделать при подключении backend
+
+1. Реализовать API routes (порядок: products → VIN → cart → favorites → orders)
+2. Заменить `CartProvider` localStorage на TanStack Query + `/api/cart`
+3. Заменить `LocalUiProvider` favorites на TanStack Query + `/api/favorites`
+4. Подключить поиск к `/api/products` с реальными фильтрами
+5. Заменить mock VIN decoder на `/api/vin/decode`
+6. Реализовать `/api/orders` для checkout
 
 ## Что можно отложить
 
 - Страница избранного (отдельный роут)
-- Страница `/salvage` (разборки) — полноценный функционал
+- Страница `/salvage` — полноценный функционал
 - Страница `/sto` — кабинет для СТО
 - Реальная фильтрация каталога по VIN-результату
 - Пагинация каталога
-- Уведомления (badge "3" в Header — статичный)
 
 ## Технический долг
 
-### console.log (допустимы сейчас, заменить при подключении API)
-- `ModelsPage.tsx` — "Найти запчасти" (частично, navigate уже работает)
-
-### Заменено на mock-поведение
-- `SearchForm.tsx` — поиск по запросу и артикулу → navigate `/catalog` ✅
-- `PopularCategories.tsx` — клик по категории → navigate `/catalog` ✅
-- `CartDrawer.tsx` — "Оформить заказ" → `alert()` с пояснением ✅
-- `ProductCard.tsx` — "Следить за ценой" → `alert()` с пояснением ✅
-
-### Inline styles (83 вхождения, приоритетные для выноса)
-- `ProductCard.tsx` — повторяющиеся `fontSize`, `fontWeight`, `marginBottom` → можно добавить `.ap-product-sku`, `.ap-product-compat`
-- `CartDrawer.tsx` — итоговая строка grand total → можно добавить `.ap-cart-total-grand`
-- `HomeHero.tsx` — стили stat-card value/label → уже есть `.ap-stat-card`, можно добавить `.ap-stat-value`, `.ap-stat-label`
-- `GenerationCard.tsx` — `h4` стили → можно добавить `.ap-gen-title`
+### Оставшиеся console.log
+- `ModelsPage.tsx` — "Найти запчасти" (navigate уже работает, console.log можно убрать)
 
 ### Прочее
-- `AppPage` в `pages.tsx` — шаблонный UI из vibe, не в стиле AudiParts. Заменить при реализации авторизации.
-- `web/src/data/parts.ts` — шаблонный файл из vibe, не используется. Можно удалить.
-- Уведомления в Header — badge "3" статичный, нет провайдера уведомлений.
-- Supplier в корзине всегда `Exist.ru` — нужно будет брать из реального предложения поставщика.
+- `AppPage` в `pages.tsx` — шаблонный UI из vibe, заменить при реализации авторизации
+- `web/src/data/parts.ts` — шаблонный файл из vibe, не используется, можно удалить
+- Supplier в корзине всегда `Exist.ru` — брать из реального предложения при подключении API
