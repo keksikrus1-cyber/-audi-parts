@@ -6,6 +6,7 @@ import { CartDrawer } from '@/components/cart/CartDrawer'
 import { LocalUiProvider } from '@/components/local-ui/LocalUiProvider'
 import { CompareBar } from '@/components/compare/CompareBar'
 import { CompareModal } from '@/components/compare/CompareModal'
+import { ToastProvider } from '@/components/toast/ToastProvider'
 import { HomeHero } from '@/components/home/HomeHero'
 import { SearchForm } from '@/components/home/SearchForm'
 import { PopularCategories } from '@/components/home/PopularCategories'
@@ -26,6 +27,7 @@ import { useAuth } from '@/lib/use-auth'
 
 export function RootLayout() {
   return (
+    <ToastProvider>
     <LocalUiProvider>
       <CartProvider>
         <main className="ap-page">
@@ -37,6 +39,7 @@ export function RootLayout() {
         </main>
       </CartProvider>
     </LocalUiProvider>
+    </ToastProvider>
   )
 }
 

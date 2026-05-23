@@ -1,6 +1,7 @@
 import type { Product } from '@/data/products'
 import { useCart } from '@/components/cart/CartProvider'
 import { useLocalUi } from '@/components/local-ui/LocalUiProvider'
+import { useToast } from '@/components/toast/ToastProvider'
 
 interface ProductCardProps {
   product: Product
@@ -9,6 +10,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { add, setOpen: openCart } = useCart()
   const { favorites, toggleFavorite, compareIds, toggleCompare } = useLocalUi()
+  const { showToast } = useToast()
 
   const isFav = favorites.has(product.id)
   const isCompare = compareIds.includes(product.id)
@@ -19,6 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
       price: product.price, priceFormatted: product.priceFormatted,
       delivery: product.delivery, supplier: 'Exist.ru',
     })
+    showToast(`${product.name} добавлен в корзину`, 'success')
     openCart(true)
   }
 
@@ -36,7 +39,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <button className={`ap-action-btn${isCompare ? ' active' : ''}`} title="Сравнить" onClick={() => toggleCompare(product.id)}>
             ⚖️
           </button>
-          <button className="ap-action-btn" title="Следить за ценой" onClick={() => alert('Уведомления о цене будут доступны после подключения backend.')}>🔔</button>
+          <button className="ap-action-btn" title="Следить за ценой" onClick={() => showToast('Уведомления о цене будут доступны после подключения backend.', 'info')}>🔔</button>
         </div>
       </div>
       <div className="ap-product-info">

@@ -1159,3 +1159,60 @@ body:has(.ap-page) {
   background: var(--ap-bg-primary);
   color: var(--ap-text-primary);
 }
+
+/* ── Toast notifications ─────────────────────────────────── */
+.ap-toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  min-width: 280px;
+  max-width: 420px;
+  width: max-content;
+}
+
+.ap-toast {
+  background: var(--ap-bg-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: 10px;
+  padding: 0.875rem 1.25rem;
+  box-shadow: var(--ap-shadow);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--ap-text-primary);
+  animation: ap-toast-in 0.25s ease, ap-toast-out 0.3s ease 2.5s forwards;
+  pointer-events: auto;
+}
+
+.ap-toast-success { border-left: 3px solid var(--ap-success); }
+.ap-toast-error   { border-left: 3px solid var(--ap-danger); }
+.ap-toast-info    { border-left: 3px solid var(--ap-info); }
+
+.ap-toast-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  font-style: normal;
+}
+.ap-toast-success .ap-toast-icon { color: var(--ap-success); }
+.ap-toast-error   .ap-toast-icon { color: var(--ap-danger); }
+.ap-toast-info    .ap-toast-icon { color: var(--ap-info); }
+
+@keyframes ap-toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ap-toast-out {
+  from { opacity: 1; }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+@media (max-width: 480px) {
+  .ap-toast-container { bottom: 5rem; left: 1rem; right: 1rem; transform: none; width: auto; }
+}

@@ -1,7 +1,9 @@
 import { useCart } from './CartProvider'
+import { useToast } from '@/components/toast/ToastProvider'
 
 export function CartDrawer() {
   const { items, open, setOpen, setQty, remove, total, count } = useCart()
+  const { showToast } = useToast()
 
   const delivery = items.length > 0 ? 350 : 0
   const bySupplier = items.reduce<Record<string, typeof items>>((acc, item) => {
@@ -74,7 +76,7 @@ export function CartDrawer() {
             <button
               className="ap-btn ap-btn-primary"
               style={{ width: '100%', padding: '1rem', fontSize: '1rem' }}
-              onClick={() => alert('Оформление заказа будет доступно после подключения backend.')}
+              onClick={() => showToast('Оформление заказа будет доступно после подключения backend.', 'info')}
             >
               Оформить заказ
             </button>
