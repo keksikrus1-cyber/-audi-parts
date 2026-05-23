@@ -74,7 +74,7 @@ export function CartDrawer() {
             <button
               className="ap-btn ap-btn-primary"
               style={{ width: '100%', padding: '1rem', fontSize: '1rem' }}
-              onClick={() => console.log('checkout', { items, total })}
+              onClick={() => alert('Оформление заказа будет доступно после подключения backend.')}
             >
               Оформить заказ
             </button>

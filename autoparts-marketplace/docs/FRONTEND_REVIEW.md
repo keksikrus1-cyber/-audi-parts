@@ -106,10 +106,13 @@
 ## Технический долг
 
 ### console.log (допустимы сейчас, заменить при подключении API)
-- `SearchForm.tsx` — поиск по запросу и артикулу
-- `ProductCard.tsx` — "Следить за ценой"
-- `CartDrawer.tsx` — "Оформить заказ"
 - `ModelsPage.tsx` — "Найти запчасти" (частично, navigate уже работает)
+
+### Заменено на mock-поведение
+- `SearchForm.tsx` — поиск по запросу и артикулу → navigate `/catalog` ✅
+- `PopularCategories.tsx` — клик по категории → navigate `/catalog` ✅
+- `CartDrawer.tsx` — "Оформить заказ" → `alert()` с пояснением ✅
+- `ProductCard.tsx` — "Следить за ценой" → `alert()` с пояснением ✅
 
 ### Inline styles (83 вхождения, приоритетные для выноса)
 - `ProductCard.tsx` — повторяющиеся `fontSize`, `fontWeight`, `marginBottom` → можно добавить `.ap-product-sku`, `.ap-product-compat`

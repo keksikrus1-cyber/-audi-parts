@@ -36,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <button className={`ap-action-btn${isCompare ? ' active' : ''}`} title="Сравнить" onClick={() => toggleCompare(product.id)}>
             ⚖️
           </button>
-          <button className="ap-action-btn" title="Следить за ценой" onClick={() => console.log('alert', product.id)}>🔔</button>
+          <button className="ap-action-btn" title="Следить за ценой" onClick={() => alert('Уведомления о цене будут доступны после подключения backend.')}>🔔</button>
         </div>
       </div>
       <div className="ap-product-info">

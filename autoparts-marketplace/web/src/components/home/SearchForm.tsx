@@ -37,7 +37,7 @@ export function SearchForm() {
             <label>Название запчасти</label>
             <div className="ap-search-input-row">
               <input className="ap-input" type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Например: тормозные колодки, масло, фильтр..." />
-              <button className="ap-btn ap-btn-primary" onClick={() => console.log('search:', query)}>НАЙТИ</button>
+              <button className="ap-btn ap-btn-primary" onClick={() => void navigate({ to: '/catalog' })}>НАЙТИ</button>
             </div>
           </div>
           <div className="ap-search-row">
@@ -135,7 +135,7 @@ export function SearchForm() {
           <label>Артикул запчасти</label>
           <div className="ap-search-input-row">
             <input className="ap-input" type="text" value={article} onChange={e => setArticle(e.target.value)} placeholder="Например: 8K0698151, P85075, W712/35" />
-            <button className="ap-btn ap-btn-primary" onClick={() => console.log('article:', article)}>НАЙТИ</button>
+            <button className="ap-btn ap-btn-primary" onClick={() => void navigate({ to: '/catalog' })}>НАЙТИ</button>
           </div>
         </div>
       )}
