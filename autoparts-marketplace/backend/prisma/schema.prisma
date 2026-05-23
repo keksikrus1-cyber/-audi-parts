@@ -137,6 +137,7 @@ model Part {
   @@index([oem], map: "parts_oem_idx")
   @@index([brand], map: "parts_brand_idx")
   @@index([supplierId], map: "parts_supplier_id_idx")
+  @@unique([supplierId, partNumber], map: "parts_supplier_part_number_key")
   @@map("parts")
 }
 

@@ -114,11 +114,34 @@ Bilstein 22-153694, NGK IZFR6K-13, Lemförder 32801 01
 
 ## Следующие этапы после schema
 
-1. **Seed** — создать `backend/prisma/seed.ts` с тестовыми данными
+1. **Seed** ✅ — `backend/prisma/seed.ts` создан (4 suppliers, 8 categories, 6 parts, 19 offers)
 2. **API routes** — Hono routes для products, suppliers, cart, favorites, vin
 3. **Auth** — уже реализована в шаблоне, нужно только проверить совместимость с новыми полями
 4. **Frontend integration** — заменить mock data на реальные API calls через TanStack Query
 5. **Contracts** — добавить Zod schemas в `packages/contracts` для новых сущностей
+
+## Когда Docker будет установлен
+
+```bash
+# 1. Установить Docker Desktop: https://www.docker.com/products/docker-desktop/
+# 2. Запустить Docker Desktop и дождаться старта
+
+# 3. Из папки autoparts-marketplace:
+docker compose pull postgres
+docker compose up -d postgres
+
+# 4. Создать .env для backend:
+# Windows PowerShell:
+Copy-Item backend\.env.example backend\.env
+# macOS/Linux:
+cp backend/.env.example backend/.env
+
+# 5. Применить миграцию:
+bun run --cwd backend prisma:migrate
+
+# 6. Запустить seed:
+bun run --cwd backend prisma:seed
+```
 
 ## Migration
 
